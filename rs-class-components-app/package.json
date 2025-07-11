@@ -9,10 +9,12 @@
     "lint": "eslint ./src -ext .ts,.tsx",
     "preview": "vite preview",
     "format:fix": "prettier --write ./src",
-    "prepare": "husky"
+    "prepare": "cd.. && husky rs-class-components-app/.husky"
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": ["eslint --fix"],
+    "**/*.{ts,tsx}": [
+      "eslint --fix"
+    ],
     "**/*": "prettier --write"
   },
   "dependencies": {
