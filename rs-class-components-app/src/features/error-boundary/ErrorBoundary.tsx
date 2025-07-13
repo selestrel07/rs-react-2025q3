@@ -27,6 +27,13 @@ export class ErrorBoundary extends Component<
     return { error: error };
   }
 
+  componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>) {
+    if (this.props.hasError && this.props.hasError !== prevProps.hasError) {
+      this.setState({ error: this.props.hasError });
+      console.error(this.props.hasError.message);
+    }
+  }
+
   render(): ReactNode {
     return (
       <div className="data-container">

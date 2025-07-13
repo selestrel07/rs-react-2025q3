@@ -14,6 +14,7 @@ export class MainPage extends Component {
     isLoading: boolean;
   } = {
     items: [],
+    error: undefined,
     isLoading: false,
   };
 
@@ -48,6 +49,12 @@ export class MainPage extends Component {
       });
   };
 
+  simulateError = (): void => {
+    this.setState({
+      error: new Error('Something went wrong! Manually generated error!'),
+    });
+  };
+
   render(): ReactNode {
     return (
       <>
@@ -68,6 +75,7 @@ export class MainPage extends Component {
             <ArtistCard key={item.id} artist={item} />
           ))}
         </ErrorBoundary>
+        <button onClick={this.simulateError}>Simulate Error</button>
       </>
     );
   }
