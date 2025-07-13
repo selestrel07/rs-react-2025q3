@@ -78,6 +78,9 @@ export class MainPage extends Component {
         <button className="error-button" onClick={this.simulateError}>
           Simulate Error
         </button>
+        {this.state.isLoading ? (
+          <div className="content-blur"></div>
+        ) : undefined}
       </>
     );
   }
