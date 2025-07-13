@@ -5,15 +5,15 @@ import type { SearchItem, SearchResult } from '../types/search-item.ts';
 import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { ArtistCard } from '../features/artists/ArtistCard.tsx';
 import { getSearchString } from '../services/local-storage.service.ts';
+import { ErrorBoundary } from '../features/error-boundary/ErrorBoundary.tsx';
 
 export class MainPage extends Component {
   state: {
     items: ArtistInfo[];
-    isError: boolean;
+    error?: Error;
     isLoading: boolean;
   } = {
     items: [],
-    isError: false,
     isLoading: false,
   };
 
@@ -40,7 +40,8 @@ export class MainPage extends Component {
           items: artistsData,
         });
       })
-      .then(() => {
+      .catch((err: Error) => this.setState({ error: err }))
+      .finally(() => {
         this.setState({
           isLoading: false,
         });
@@ -54,9 +55,19 @@ export class MainPage extends Component {
           searchArtists={this.searchArtists}
           isLoading={this.state.isLoading}
         />
-        {this.state.items.map((item) => (
-          <ArtistCard key={item.id} artist={item} />
-        ))}
+        <ErrorBoundary
+          fallback={
+            <p>
+              Something went wrong. Please check the console to see the error
+              message.
+            </p>
+          }
+          hasError={this.state.error}
+        >
+          {this.state.items.map((item) => (
+            <ArtistCard key={item.id} artist={item} />
+          ))}
+        </ErrorBoundary>
       </>
     );
   }
