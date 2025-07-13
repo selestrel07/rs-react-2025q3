@@ -1,5 +1,8 @@
 import { type ChangeEvent, Component, type ReactNode } from 'react';
-import { setSearchString } from '../../services/local-storage.service.ts';
+import {
+  getSearchString,
+  setSearchString,
+} from '../../services/local-storage.service.ts';
 import './SearchComponent.css';
 
 type SearchProps = {
@@ -13,25 +16,22 @@ type SearchState = {
 
 export class SearchComponent extends Component<SearchProps, SearchState> {
   state: SearchState = {
-    query: '',
+    query: getSearchString(),
   };
 
   handleQueryUpdate = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({
-      query: event.target.value.toString().trim(),
-    });
-  };
-
-  clearQuery = () => {
-    this.setState({
-      query: '',
+      query: event.target.value.toString(),
     });
   };
 
   handleSearch = () => {
-    this.props.searchArtists(this.state.query);
-    setSearchString(this.state.query);
-    this.clearQuery();
+    const trimmedString = this.state.query.trim();
+    this.setState({
+      query: trimmedString,
+    });
+    this.props.searchArtists(trimmedString);
+    setSearchString(trimmedString);
   };
 
   render(): ReactNode {
