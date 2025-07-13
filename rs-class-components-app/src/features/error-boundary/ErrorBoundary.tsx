@@ -29,8 +29,10 @@ export class ErrorBoundary extends Component<
   }
 
   componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>) {
-    if (this.props.hasError && this.props.hasError !== prevProps.hasError) {
+    if (this.props.hasError !== prevProps.hasError) {
       this.setState({ error: this.props.hasError });
+    }
+    if (this.props.hasError) {
       console.error(this.props.hasError.message);
     }
   }

@@ -25,6 +25,7 @@ export class MainPage extends Component {
   searchArtists = (searchQuery: string) => {
     this.setState({
       isLoading: true,
+      error: undefined,
     });
     searchArtists(searchQuery)
       .then((result: SearchResult) =>
