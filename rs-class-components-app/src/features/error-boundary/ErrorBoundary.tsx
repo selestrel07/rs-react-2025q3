@@ -1,4 +1,5 @@
 import { Component, type ReactNode } from 'react';
+import './ErrorBoundary.css';
 
 type ErrorBoundaryProps = {
   fallback: ReactNode;

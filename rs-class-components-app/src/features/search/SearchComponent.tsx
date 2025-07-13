@@ -1,5 +1,6 @@
 import { type ChangeEvent, Component, type ReactNode } from 'react';
 import { setSearchString } from '../../services/local-storage.service.ts';
+import './SearchComponent.css';
 
 type SearchProps = {
   searchArtists: (searchString: string) => void;

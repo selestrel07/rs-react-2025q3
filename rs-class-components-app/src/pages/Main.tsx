@@ -75,7 +75,9 @@ export class MainPage extends Component {
             <ArtistCard key={item.id} artist={item} />
           ))}
         </ErrorBoundary>
-        <button onClick={this.simulateError}>Simulate Error</button>
+        <button className="error-button" onClick={this.simulateError}>
+          Simulate Error
+        </button>
       </>
     );
   }

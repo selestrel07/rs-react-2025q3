@@ -1,5 +1,6 @@
 import { Component, type ReactNode } from 'react';
 import type { ArtistInfo } from '../../types/artist-data.ts';
+import './ArtistCard.css';
 
 type ArtistCardProps = {
   artist: ArtistInfo;
