@@ -1,4 +1,5 @@
-import { Component } from 'react';
+import { Component, type ReactNode } from 'react';
+import { SearchComponent } from '../features/search/SearchComponent.tsx';
 
 export class MainPage extends Component {
   state: {
@@ -11,10 +12,25 @@ export class MainPage extends Component {
     isLoading: false,
   };
 
-  render() {
+  searchArtists = (searchQuery: string) => {
+    this.setState({
+      isLoading: true,
+    });
+    this.setState({
+      items: [searchQuery],
+    });
+    this.setState({
+      isLoading: false,
+    });
+  };
+
+  render(): ReactNode {
     return (
       <>
-        <h1>Hello</h1>
+        <SearchComponent
+          searchArtists={this.searchArtists}
+          isLoading={this.state.isLoading}
+        />
       </>
     );
   }
