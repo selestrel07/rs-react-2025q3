@@ -2,11 +2,12 @@ import { Component, type ReactNode } from 'react';
 import { SearchComponent } from '../features/search/SearchComponent.tsx';
 import { loadArtistData, searchArtists } from '../services/api.service.ts';
 import type { SearchItem, SearchResult } from '../types/search-item.ts';
-import type { ArtistData } from '../types/artist-data.ts';
+import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
+import { ArtistCard } from '../features/artists/ArtistCard.tsx';
 
 export class MainPage extends Component {
   state: {
-    items: string[];
+    items: ArtistInfo[];
     isError: boolean;
     isLoading: boolean;
   } = {
@@ -30,13 +31,11 @@ export class MainPage extends Component {
         const artistsData = artists.map(
           (artistData: ArtistData) => artistData.data
         );
-        console.debug(artistsData);
         return this.setState({
           items: artistsData,
         });
       })
       .then(() => {
-        console.log(this.state.items);
         this.setState({
           isLoading: false,
         });
@@ -50,6 +49,9 @@ export class MainPage extends Component {
           searchArtists={this.searchArtists}
           isLoading={this.state.isLoading}
         />
+        {this.state.items.map((item) => (
+          <ArtistCard key={item.id} artist={item} />
+        ))}
       </>
     );
   }

@@ -7,4 +7,5 @@ export type ArtistInfo = {
   death_date: number;
   title: string;
   description: string;
+  id: number;
 };
