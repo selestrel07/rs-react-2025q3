@@ -40,6 +40,7 @@ export class SearchComponent extends Component<SearchProps, SearchState> {
         <input
           type="search"
           value={this.state.query}
+          placeholder="Type artist information..."
           onChange={this.handleQueryUpdate}
           disabled={this.props.isLoading}
         />
