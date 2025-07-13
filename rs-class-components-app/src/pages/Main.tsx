@@ -71,9 +71,15 @@ export class MainPage extends Component {
           }
           hasError={this.state.error}
         >
-          {this.state.items.map((item) => (
-            <ArtistCard key={item.id} artist={item} />
-          ))}
+          {this.state.items.length > 0
+            ? this.state.items.map((item) => (
+                <ArtistCard key={item.id} artist={item} />
+              ))
+            : [
+                <p key="empty-message">
+                  No results were found for the provided query.
+                </p>,
+              ]}
         </ErrorBoundary>
         <button className="error-button" onClick={this.simulateError}>
           Simulate Error
