@@ -4,6 +4,7 @@ import { loadArtistData, searchArtists } from '../services/api.service.ts';
 import type { SearchItem, SearchResult } from '../types/search-item.ts';
 import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { ArtistCard } from '../features/artists/ArtistCard.tsx';
+import { getSearchString } from '../services/local-storage.service.ts';
 
 export class MainPage extends Component {
   state: {
@@ -15,6 +16,10 @@ export class MainPage extends Component {
     isError: false,
     isLoading: false,
   };
+
+  componentDidMount(): void {
+    this.searchArtists(getSearchString());
+  }
 
   searchArtists = (searchQuery: string) => {
     this.setState({
