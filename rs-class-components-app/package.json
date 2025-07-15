@@ -9,7 +9,7 @@
     "lint": "eslint ./src",
     "preview": "vite preview",
     "format:fix": "prettier --write ./src",
-    "prepare": "cd.. && husky rs-class-components-app/.husky"
+    "prepare": "cd .. && husky rs-class-components-app/.husky"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
