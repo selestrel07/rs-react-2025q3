@@ -1,10 +1,9 @@
-import { Component, type ReactNode } from 'react';
+import { Component, type ErrorInfo, type ReactNode } from 'react';
 import './ErrorBoundary.css';
 
 type ErrorBoundaryProps = {
   fallback: ReactNode;
-  children: ReactNode[];
-  hasError: Error | undefined;
+  children: ReactNode[] | ReactNode;
 };
 
 type ErrorBoundaryState = {
@@ -17,31 +16,18 @@ export class ErrorBoundary extends Component<
 > {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { error: this.props.hasError };
-    if (this.props.hasError) {
-      console.error(this.props.hasError.message);
-    }
+    this.state = { error: undefined };
   }
 
-  static getDeStateFromError(error: Error) {
-    console.error(error.message);
+  static getDerivedStateFromError(error: Error) {
     return { error: error };
   }
 
-  componentDidUpdate(prevProps: Readonly<ErrorBoundaryProps>) {
-    if (this.props.hasError !== prevProps.hasError) {
-      this.setState({ error: this.props.hasError });
-    }
-    if (this.props.hasError) {
-      console.error(this.props.hasError.message);
-    }
+  componentDidCatch(error: Error, info: ErrorInfo) {
+    console.error('Caught in error boundary: ', error, info);
   }
 
   render(): ReactNode {
-    return (
-      <div className="data-container">
-        {this.state.error ? this.props.fallback : this.props.children}
-      </div>
-    );
+    return <>{this.state.error ? this.props.fallback : this.props.children}</>;
   }
 }

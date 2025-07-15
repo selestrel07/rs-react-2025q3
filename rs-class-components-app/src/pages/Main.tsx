@@ -5,7 +5,6 @@ import type { SearchItem, SearchResult } from '../types/search-item.ts';
 import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { ArtistCard } from '../features/artists/ArtistCard.tsx';
 import { getSearchString } from '../services/local-storage.service.ts';
-import { ErrorBoundary } from '../features/error-boundary/ErrorBoundary.tsx';
 
 export class MainPage extends Component {
   state: {
@@ -57,21 +56,16 @@ export class MainPage extends Component {
   };
 
   render(): ReactNode {
+    if (this.state.error) {
+      throw this.state.error;
+    }
     return (
       <>
         <SearchComponent
           searchArtists={this.searchArtists}
           isLoading={this.state.isLoading}
         />
-        <ErrorBoundary
-          fallback={
-            <p>
-              Something went wrong. Please check the console to see the error
-              message.
-            </p>
-          }
-          hasError={this.state.error}
-        >
+        <div className="data-container">
           {this.state.items.length > 0
             ? this.state.items.map((item) => (
                 <ArtistCard key={item.id} artist={item} />
@@ -81,7 +75,7 @@ export class MainPage extends Component {
                   No results were found for the provided query.
                 </p>,
               ]}
-        </ErrorBoundary>
+        </div>
         <button className="error-button" onClick={this.simulateError}>
           Simulate Error
         </button>

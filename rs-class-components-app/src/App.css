@@ -45,6 +45,10 @@ input {
   align-self: end;
 }
 
+.error-container {
+  margin: auto;
+}
+
 .content-blur {
   position: absolute;
   top: 0;
