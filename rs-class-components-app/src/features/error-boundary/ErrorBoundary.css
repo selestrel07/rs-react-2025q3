@@ -1,0 +1,10 @@
+.data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 600px;
+  min-height: 80vh;
+}
