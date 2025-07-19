@@ -13,7 +13,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: 'text',
       include: ['src/**/*.{ts,tsx}'],
-      exclude: ['src/**/*.test.{ts,tsx}', 'src/**/*.d.ts'],
+      exclude: ['src/**/*.test.{ts,tsx}', 'src/**/*.d.ts', 'src/test-utils/*'],
     },
     coverageThreshold: {
       global: {
