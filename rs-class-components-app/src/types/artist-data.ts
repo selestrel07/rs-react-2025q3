@@ -3,8 +3,8 @@ export type ArtistData = {
 };
 
 export type ArtistInfo = {
-  birth_date: number;
-  death_date: number;
+  birth_date?: number;
+  death_date?: number;
   title: string;
   description: string;
   id: number;
