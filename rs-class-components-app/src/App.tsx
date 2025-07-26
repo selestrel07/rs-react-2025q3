@@ -2,7 +2,8 @@ import './App.css';
 import { MainPage } from './pages/main/Main.tsx';
 import { ErrorBoundary } from './features/error-boundary/ErrorBoundary.tsx';
 import { BrowserRouter, Route, Routes } from 'react-router';
-import { Path } from './enums/Path.ts';
+import { AboutPage } from './pages/about/About.tsx';
+import { ABOUT, MAIN } from './data/path-constants.ts';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
         }
       >
         <Routes>
-          <Route path={Path.MAIN} element={<MainPage />} />
+          <Route path={MAIN} element={<MainPage />} />
+          <Route path={ABOUT} element={<AboutPage />} />
         </Routes>
       </ErrorBoundary>
     </BrowserRouter>
