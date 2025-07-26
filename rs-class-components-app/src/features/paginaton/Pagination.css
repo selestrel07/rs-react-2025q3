@@ -1,0 +1,16 @@
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.page-number {
+  padding: 0.25rem;
+  width: 2rem;
+}
+
+.button-pagination {
+  border-radius: 100%;
+  padding: 0.25rem 0.5rem;
+}

@@ -35,6 +35,14 @@ button:hover {
   background: #8bedd9;
 }
 
+button:disabled {
+  transform: scale(1);
+  cursor: not-allowed;
+  background: rgba(220, 228, 226, 0.39);
+  color: rgba(36, 110, 21, 0.3);
+  border-color: rgba(182, 189, 182, 0.34);
+}
+
 input {
   font-size: 1rem;
   border-radius: 0.25rem;
