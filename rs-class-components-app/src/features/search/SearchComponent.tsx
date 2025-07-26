@@ -1,4 +1,4 @@
-import { type ChangeEvent, Component, type ReactNode } from 'react';
+import { type ChangeEvent, type FC, type ReactNode, useState } from 'react';
 import {
   getSearchString,
   setSearchString,
@@ -10,44 +10,34 @@ type SearchProps = {
   isLoading: boolean;
 };
 
-type SearchState = {
-  query: string;
-};
+export const SearchComponent: FC<SearchProps> = (
+  properties: SearchProps
+): ReactNode => {
+  const [query, setQuery] = useState(getSearchString());
 
-export class SearchComponent extends Component<SearchProps, SearchState> {
-  state: SearchState = {
-    query: getSearchString(),
+  const handleQueryUpdate = (event: ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value.toString());
   };
 
-  handleQueryUpdate = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      query: event.target.value.toString(),
-    });
-  };
-
-  handleSearch = () => {
-    const trimmedString = this.state.query.trim();
-    this.setState({
-      query: trimmedString,
-    });
-    this.props.searchArtists(trimmedString);
+  const handleSearch = () => {
+    const trimmedString = query.trim();
+    setQuery(trimmedString);
+    properties.searchArtists(trimmedString);
     setSearchString(trimmedString);
   };
 
-  render(): ReactNode {
-    return (
-      <div className="search-wrapper">
-        <input
-          type="search"
-          value={this.state.query}
-          placeholder="Type artist information..."
-          onChange={this.handleQueryUpdate}
-          disabled={this.props.isLoading}
-        />
-        <button onClick={this.handleSearch} disabled={this.props.isLoading}>
-          Search
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="search-wrapper">
+      <input
+        type="search"
+        value={query}
+        placeholder="Type artist information..."
+        onChange={handleQueryUpdate}
+        disabled={properties.isLoading}
+      />
+      <button onClick={handleSearch} disabled={properties.isLoading}>
+        Search
+      </button>
+    </div>
+  );
+};
