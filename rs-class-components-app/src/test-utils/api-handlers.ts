@@ -22,7 +22,7 @@ export const handlers = [
         },
       ],
       pagination: {
-        total_pages: 1,
+        total_pages: 2,
       },
     });
   }),
