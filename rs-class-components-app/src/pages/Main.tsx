@@ -1,4 +1,4 @@
-import { Component, type ReactNode } from 'react';
+import { type FC, type ReactNode, useEffect, useState } from 'react';
 import { SearchComponent } from '../features/search/SearchComponent.tsx';
 import { loadArtistData, searchArtists } from '../services/api.service.ts';
 import type { SearchItem, SearchResult } from '../types/search-item.ts';
@@ -6,83 +6,53 @@ import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { ArtistCard } from '../features/artists/ArtistCard.tsx';
 import { getSearchString } from '../services/local-storage.service.ts';
 
-export class MainPage extends Component {
-  state: {
-    items: ArtistInfo[];
-    error?: Error;
-    isLoading: boolean;
-  } = {
-    items: [],
-    error: undefined,
-    isLoading: false,
-  };
+export const MainPage: FC = (): ReactNode => {
+  const [artists, setArtists] = useState<ArtistInfo[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error | undefined>(undefined);
 
-  componentDidMount(): void {
-    this.searchArtists(getSearchString());
-  }
+  useEffect(() => {
+    loadArtistsData(getSearchString());
+  }, []);
 
-  searchArtists = (searchQuery: string) => {
-    this.setState({
-      isLoading: true,
-      error: undefined,
-    });
+  const loadArtistsData = (searchQuery: string) => {
+    setLoading(true);
+    setError(undefined);
     searchArtists(searchQuery)
-      .then((result: SearchResult) =>
-        result.data.map((item: SearchItem) => loadArtistData(item.api_link))
-      )
-      .then((data) => {
-        return Promise.all(data);
-      })
-      .then((artists: ArtistData[]) => {
-        const artistsData = artists.map(
-          (artistData: ArtistData) => artistData.data
+      .then(async (result: SearchResult) => {
+        const artistsData: ArtistData[] = await Promise.all(
+          result.data.map((item: SearchItem) => loadArtistData(item.api_link))
         );
-        return this.setState({
-          items: artistsData,
-        });
+        setArtists(artistsData.map((artistData) => artistData.data));
       })
-      .catch((err: Error) => this.setState({ error: err }))
-      .finally(() => {
-        this.setState({
-          isLoading: false,
-        });
-      });
+      .catch((error: Error) => setError(error))
+      .finally(() => setLoading(false));
   };
 
-  simulateError = (): void => {
-    this.setState({
-      error: new Error('Something went wrong! Manually generated error!'),
-    });
+  const simulateError = (): void => {
+    setError(new Error('Something went wrong! Manually generated error!'));
   };
 
-  render(): ReactNode {
-    if (this.state.error) {
-      throw this.state.error;
-    }
-    return (
-      <>
-        <SearchComponent
-          searchArtists={this.searchArtists}
-          isLoading={this.state.isLoading}
-        />
-        <div className="data-container">
-          {this.state.items.length > 0
-            ? this.state.items.map((item) => (
-                <ArtistCard key={item.id} artist={item} />
-              ))
-            : [
-                <p key="empty-message">
-                  No results were found for the provided query.
-                </p>,
-              ]}
-        </div>
-        <button className="error-button" onClick={this.simulateError}>
-          Simulate Error
-        </button>
-        {this.state.isLoading ? (
-          <div className="content-blur"></div>
-        ) : undefined}
-      </>
-    );
+  if (error) {
+    throw error;
   }
-}
+
+  return (
+    <>
+      <SearchComponent searchArtists={loadArtistsData} isLoading={loading} />
+      <div className="data-container">
+        {artists.length > 0
+          ? artists.map((item) => <ArtistCard key={item.id} artist={item} />)
+          : [
+              <p key="empty-message">
+                No results were found for the provided query.
+              </p>,
+            ]}
+      </div>
+      <button className="error-button" onClick={simulateError}>
+        Simulate Error
+      </button>
+      {loading ? <div className="content-blur"></div> : undefined}
+    </>
+  );
+};
