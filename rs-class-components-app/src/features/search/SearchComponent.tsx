@@ -3,15 +3,11 @@ import {
   getSearchString,
   setSearchString,
 } from '../../services/local-storage.service.ts';
+import type { SearchProperties } from '../../types/component-properties.ts';
 import './SearchComponent.css';
 
-type SearchProps = {
-  searchArtists: (searchString: string) => void;
-  isLoading: boolean;
-};
-
-export const SearchComponent: FC<SearchProps> = (
-  properties: SearchProps
+export const SearchComponent: FC<SearchProperties> = (
+  properties: SearchProperties
 ): ReactNode => {
   const [query, setQuery] = useState(getSearchString());
 
