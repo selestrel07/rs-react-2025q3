@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { MainPage } from './Main.tsx';
-import { artistsMockData } from '../test-utils/test-data.ts';
+import { artistsMockData } from '../../test-utils/test-data.ts';
 import { userEvent } from '@testing-library/user-event';
 
 describe('Main page tests', () => {

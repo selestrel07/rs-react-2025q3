@@ -1,11 +1,14 @@
 import { type FC, type ReactNode, useEffect, useState } from 'react';
-import { SearchComponent } from '../features/search/SearchComponent.tsx';
-import { loadArtistData, searchArtistsPage } from '../services/api.service.ts';
-import type { SearchItem, SearchResult } from '../types/search-item.ts';
-import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
-import { ArtistCard } from '../features/artists/ArtistCard.tsx';
-import { getSearchString } from '../services/local-storage.service.ts';
-import { Pagination } from '../features/paginaton/Pagination.tsx';
+import { SearchComponent } from '../../features/search/SearchComponent.tsx';
+import {
+  loadArtistData,
+  searchArtistsPage,
+} from '../../services/api.service.ts';
+import type { SearchItem, SearchResult } from '../../types/search-item.ts';
+import type { ArtistData, ArtistInfo } from '../../types/artist-data.ts';
+import { ArtistCard } from '../../features/artists/ArtistCard.tsx';
+import { getSearchString } from '../../services/local-storage.service.ts';
+import { Pagination } from '../../features/paginaton/Pagination.tsx';
 import './Main.css';
 
 export const MainPage: FC = (): ReactNode => {
