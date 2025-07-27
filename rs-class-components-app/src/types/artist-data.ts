@@ -8,5 +8,5 @@ export type ArtistInfo = {
   title: string;
   description: string;
   id: number;
-  alt_titles: string[];
+  alt_titles?: string[];
 };
