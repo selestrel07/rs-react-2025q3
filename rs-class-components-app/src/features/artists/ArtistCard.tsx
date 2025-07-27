@@ -6,7 +6,13 @@ export const ArtistCard: FC<ArtistCardProperties> = (
   props: ArtistCardProperties
 ): ReactNode => {
   return (
-    <div className="card">
+    <div
+      className="card"
+      onClick={(e) => {
+        e.stopPropagation();
+        props.navigate(props.artist.id);
+      }}
+    >
       <p>
         <b>Title: </b>
         {props.artist.title}

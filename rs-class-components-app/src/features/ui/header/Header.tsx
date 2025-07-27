@@ -11,7 +11,7 @@ export const Header: FC = () => {
     <header>
       <ul>
         <li>
-          <NavLink style={style} to={MAIN}>
+          <NavLink style={style} to={`${MAIN}/?page=1`}>
             Main
           </NavLink>
         </li>

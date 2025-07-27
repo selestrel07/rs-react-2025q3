@@ -5,11 +5,19 @@ import type { PaginationProperties } from '../../types/component-properties.ts';
 export const Pagination: FC<PaginationProperties> = (
   properties: PaginationProperties
 ): ReactNode => {
+  if (properties.pageNumber < 1) {
+    properties.setPageNumber(1);
+  }
+
   return (
     <div className="pagination-wrapper">
       <button
         className="button-pagination"
-        onClick={() => properties.setPageNumber((p) => p - 1)}
+        onClick={() =>
+          properties.setPageNumber((p) =>
+            p > properties.pageCount + 1 ? properties.pageCount : p - 1
+          )
+        }
         disabled={properties.pageNumber === 1}
       >
         {'<'}

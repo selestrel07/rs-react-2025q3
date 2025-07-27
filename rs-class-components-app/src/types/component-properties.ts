@@ -3,6 +3,7 @@ import type { Dispatch, SetStateAction } from 'react';
 
 export type ArtistCardProperties = {
   artist: ArtistInfo;
+  navigate: (id: number) => void | Promise<void>;
 };
 
 export type SearchProperties = {

@@ -20,7 +20,10 @@ function App() {
       >
         <Header />
         <Routes>
-          <Route path="/" element={<Navigate to={MAIN} replace />} />
+          <Route
+            path="/"
+            element={<Navigate to={`${MAIN}/?page=1`} replace />}
+          />
           <Route path={MAIN} element={<MainPage />} />
           <Route path={ABOUT} element={<AboutPage />} />
           <Route path={ANY} element={<NotFoundPage />} />

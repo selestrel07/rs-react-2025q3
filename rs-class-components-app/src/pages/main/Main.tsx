@@ -10,15 +10,31 @@ import { ArtistCard } from '../../features/artists/ArtistCard.tsx';
 import { getSearchString } from '../../services/local-storage.service.ts';
 import { Pagination } from '../../features/paginaton/Pagination.tsx';
 import './Main.css';
+import { ArtistDetailedCard } from '../../features/artists/ArtistDetailedCard.tsx';
+import { useNavigate, useSearchParams } from 'react-router';
+import { MAIN } from '../../data/path-constants.ts';
+
+const composeNavigateLink = (
+  pageNumber: number,
+  artistId: string | null
+): string => {
+  return `${MAIN}/?page=${pageNumber}${artistId ? `&artist-id=${artistId}` : ''}`;
+};
 
 export const MainPage: FC = (): ReactNode => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const page = searchParams.get('page');
+  const artistId = searchParams.get('artist-id');
   const [artists, setArtists] = useState<ArtistInfo[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | undefined>(undefined);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(
+    page !== null && /\d+/.test(page) ? +page : 1
+  );
   const [pageCount, setPageCount] = useState(1);
-
   useEffect(() => {
+    navigate(composeNavigateLink(pageNumber, null));
     loadArtistsData(pageNumber, getSearchString());
   }, [pageNumber]);
 
@@ -43,29 +59,52 @@ export const MainPage: FC = (): ReactNode => {
 
   return (
     <>
-      <div className="data-container">
-        <SearchComponent
-          searchArtists={(qs: string) => {
-            setPageNumber(1);
-            loadArtistsData(pageNumber, qs);
-          }}
-          isLoading={loading}
-        />
-        <div className="cards-container">
-          {artists.length > 0
-            ? artists.map((item) => <ArtistCard key={item.id} artist={item} />)
-            : [
-                <p key="empty-message">
-                  No results were found for the provided query.
-                </p>,
-              ]}
+      <main>
+        <div className="data-container">
+          <SearchComponent
+            searchArtists={(qs: string) => {
+              setPageNumber(1);
+              loadArtistsData(pageNumber, qs);
+            }}
+            isLoading={loading}
+          />
+          <div
+            className="cards-container"
+            onClick={() => navigate(composeNavigateLink(pageNumber, null))}
+          >
+            {artists.length > 0
+              ? artists.map((item) => (
+                  <ArtistCard
+                    key={item.id}
+                    artist={item}
+                    navigate={(id: number) =>
+                      navigate(composeNavigateLink(pageNumber, id.toString()))
+                    }
+                  />
+                ))
+              : [
+                  <p key="empty-message">
+                    No results were found for the provided query.
+                  </p>,
+                ]}
+          </div>
+          <Pagination
+            pageNumber={pageNumber}
+            pageCount={pageCount}
+            setPageNumber={setPageNumber}
+          />
         </div>
-        <Pagination
-          pageNumber={pageNumber}
-          pageCount={pageCount}
-          setPageNumber={setPageNumber}
-        />
-      </div>
+        {artistId !== null ? (
+          <ArtistDetailedCard
+            id={
+              artists.map((artist) => artist.id).includes(+artistId)
+                ? artistId
+                : '-1'
+            }
+            page={pageNumber}
+          />
+        ) : undefined}
+      </main>
       {loading ? <div className="content-blur"></div> : undefined}
     </>
   );
