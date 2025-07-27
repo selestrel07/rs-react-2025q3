@@ -23,6 +23,8 @@ describe('Artist detailed card tests', () => {
       wrapper: BrowserRouter,
     });
 
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
     expect(await screen.findByText('Title:')).toBeInTheDocument();
     expect(await screen.findByText(data.title)).toBeInTheDocument();
     expect(await screen.findByText('Alternative titles:')).toBeInTheDocument();

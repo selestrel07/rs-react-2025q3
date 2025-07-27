@@ -15,12 +15,21 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   page,
 }): ReactNode => {
   const [artistData, setArtistData] = useState<ArtistInfo | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (id !== '-1') {
-      loadArtistDataById(id).then((data) => setArtistData(data.data));
+      setLoading(true);
+      loadArtistDataById(id)
+        .then((data) => setArtistData(data.data))
+        .finally(() => setLoading(false));
     }
   }, [id]);
+
+  if (loading) {
+    return <div className="detailed-card">Loading...</div>;
+  }
+
   return (
     <div className="detailed-card">
       <Link to={`${MAIN}?page=${page}`}>Close</Link>
