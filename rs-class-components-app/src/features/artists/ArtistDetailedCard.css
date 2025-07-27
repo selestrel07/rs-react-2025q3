@@ -2,9 +2,14 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
+  align-self: center;
   gap: 1rem;
   width: 40%;
   text-align: left;
+  border: 1px solid #a8e1a4;
+  border-radius: 0.5rem;
+  height: fit-content;
+  padding: 1rem;
 }
 
 .artist-info {
