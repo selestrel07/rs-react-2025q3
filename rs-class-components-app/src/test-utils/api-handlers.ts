@@ -21,6 +21,9 @@ export const handlers = [
           api_link: 'https://api.artic.edu/api/v1/agents/4',
         },
       ],
+      pagination: {
+        total_pages: 2,
+      },
     });
   }),
   http.get<{ id: string }>(

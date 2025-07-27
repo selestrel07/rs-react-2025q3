@@ -17,6 +17,7 @@ export const artistsMockData = [
     data: {
       id: '2',
       title: 'First Artist',
+      alt_titles: ['Alternative Second Artist'],
       birth_date: 1959,
       death_date: 2000,
     },
@@ -33,8 +34,6 @@ export const artistsMockData = [
     data: {
       id: '4',
       title: 'Third Artist',
-      birth_date: 1773,
-      death_date: 1830,
     },
   },
 ];

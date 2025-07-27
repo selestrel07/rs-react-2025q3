@@ -1,53 +1,47 @@
-import { type ChangeEvent, Component, type ReactNode } from 'react';
 import {
-  getSearchString,
-  setSearchString,
-} from '../../services/local-storage.service.ts';
+  type ChangeEvent,
+  type FC,
+  type ReactNode,
+  useRef,
+  useState,
+} from 'react';
+import { setSearchString } from '../../services/local-storage.service.ts';
+import type { SearchProperties } from '../../types/component-properties.ts';
 import './SearchComponent.css';
+import { useQueryString } from '../../hooks/UseQueryString.tsx';
 
-type SearchProps = {
-  searchArtists: (searchString: string) => void;
-  isLoading: boolean;
-};
+export const SearchComponent: FC<SearchProperties> = (
+  properties: SearchProperties
+): ReactNode => {
+  const { getQuery, setQuery } = useQueryString();
+  const [currentValue, setCurrentValue] = useState(getQuery);
+  const ref = useRef<HTMLInputElement>(null);
 
-type SearchState = {
-  query: string;
-};
-
-export class SearchComponent extends Component<SearchProps, SearchState> {
-  state: SearchState = {
-    query: getSearchString(),
+  const handleQueryUpdate = (event: ChangeEvent<HTMLInputElement>) => {
+    setCurrentValue(event.currentTarget.value);
   };
 
-  handleQueryUpdate = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({
-      query: event.target.value.toString(),
-    });
-  };
-
-  handleSearch = () => {
-    const trimmedString = this.state.query.trim();
-    this.setState({
-      query: trimmedString,
-    });
-    this.props.searchArtists(trimmedString);
+  const handleSearch = () => {
+    const trimmedString = currentValue.trim();
+    setCurrentValue(trimmedString);
+    setQuery(trimmedString);
+    properties.searchArtists(trimmedString);
     setSearchString(trimmedString);
   };
 
-  render(): ReactNode {
-    return (
-      <div className="search-wrapper">
-        <input
-          type="search"
-          value={this.state.query}
-          placeholder="Type artist information..."
-          onChange={this.handleQueryUpdate}
-          disabled={this.props.isLoading}
-        />
-        <button onClick={this.handleSearch} disabled={this.props.isLoading}>
-          Search
-        </button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="search-wrapper">
+      <input
+        ref={ref}
+        type="search"
+        value={currentValue}
+        placeholder="Type artist information..."
+        onChange={handleQueryUpdate}
+        disabled={properties.isLoading}
+      />
+      <button onClick={handleSearch} disabled={properties.isLoading}>
+        Search
+      </button>
+    </div>
+  );
+};

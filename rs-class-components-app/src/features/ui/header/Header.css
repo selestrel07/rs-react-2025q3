@@ -1,0 +1,20 @@
+header {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  background-color: #bfddbd;
+  padding: 0.5rem;
+}
+
+header ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+header a {
+  display: inline-block;
+  height: 100%;
+  padding: 0.25rem;
+  text-decoration: none;
+}

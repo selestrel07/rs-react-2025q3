@@ -1,28 +1,30 @@
-import { Component, type ReactNode } from 'react';
-import type { ArtistInfo } from '../../types/artist-data.ts';
+import { type FC, type ReactNode } from 'react';
 import './ArtistCard.css';
+import type { ArtistCardProperties } from '../../types/component-properties.ts';
 
-type ArtistCardProps = {
-  artist: ArtistInfo;
+export const ArtistCard: FC<ArtistCardProperties> = (
+  props: ArtistCardProperties
+): ReactNode => {
+  return (
+    <div
+      className="card"
+      onClick={(e) => {
+        e.stopPropagation();
+        props.navigate(props.artist.id);
+      }}
+    >
+      <p>
+        <b>Title: </b>
+        {props.artist.title}
+      </p>
+      <p>
+        <b>Birth Date: </b>
+        {props.artist.birth_date ?? '?'}
+      </p>
+      <p>
+        <b>Date of Death: </b>
+        {props.artist.death_date ?? '?'}
+      </p>
+    </div>
+  );
 };
-
-export class ArtistCard extends Component<ArtistCardProps, object> {
-  render(): ReactNode {
-    return (
-      <div className="card">
-        <p>
-          <b>Title: </b>
-          {this.props.artist.title}
-        </p>
-        <p>
-          <b>Birth Date: </b>
-          {this.props.artist.birth_date ?? '?'}
-        </p>
-        <p>
-          <b>Date of Death: </b>
-          {this.props.artist.death_date ?? '?'}
-        </p>
-      </div>
-    );
-  }
-}
