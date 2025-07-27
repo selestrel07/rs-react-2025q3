@@ -1,7 +1,7 @@
 import './App.css';
 import { MainPage } from './pages/main/Main.tsx';
 import { ErrorBoundary } from './features/error-boundary/ErrorBoundary.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { AboutPage } from './pages/about/About.tsx';
 import { ABOUT, ANY, MAIN } from './data/path-constants.ts';
 import { NotFoundPage } from './pages/not-found/NotFound.tsx';
@@ -20,6 +20,7 @@ function App() {
       >
         <Header />
         <Routes>
+          <Route path="/" element={<Navigate to={MAIN} replace />} />
           <Route path={MAIN} element={<MainPage />} />
           <Route path={ABOUT} element={<AboutPage />} />
           <Route path={ANY} element={<NotFoundPage />} />
