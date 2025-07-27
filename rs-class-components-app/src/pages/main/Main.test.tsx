@@ -3,10 +3,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { MainPage } from './Main.tsx';
 import { artistsMockData } from '../../test-utils/test-data.ts';
 import { userEvent } from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router';
 
 describe('Main page tests', () => {
   it('Should show the empty list message while the data is not received and elements list after the data is received from the API', async () => {
-    render(<MainPage />);
+    render(<MainPage />, { wrapper: BrowserRouter });
 
     //Empty list message is shown before the data received from the API
     expect(
@@ -27,13 +28,13 @@ describe('Main page tests', () => {
   });
 
   it('Should render with page number one by default', () => {
-    render(<MainPage />);
+    render(<MainPage />, { wrapper: BrowserRouter });
 
     expect(screen.getByText('1')).toBeInTheDocument();
   });
 
   it('Should reset page number after search button click', async () => {
-    render(<MainPage />);
+    render(<MainPage />, { wrapper: BrowserRouter });
 
     //switch to the second page
     await userEvent.click(screen.getByRole('button', { name: '>' }));
