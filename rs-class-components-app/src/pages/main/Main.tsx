@@ -55,6 +55,12 @@ export const MainPage: FC = (): ReactNode => {
       .finally(() => setLoading(false));
   };
 
+  const navigateToFirstPage = () => {
+    const pageNumber = 1;
+    navigate(composeNavigateLink(pageNumber, null));
+    setPageNumber(pageNumber);
+  };
+
   if (error) {
     throw error;
   }
@@ -65,7 +71,7 @@ export const MainPage: FC = (): ReactNode => {
         <div className="data-container">
           <SearchComponent
             searchArtists={(qs: string) => {
-              setPageNumber(1);
+              navigateToFirstPage();
               loadArtistsData(pageNumber, qs);
             }}
             isLoading={loading}
