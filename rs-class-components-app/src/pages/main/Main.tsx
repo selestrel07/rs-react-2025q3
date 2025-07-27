@@ -7,12 +7,12 @@ import {
 import type { SearchItem, SearchResult } from '../../types/search-item.ts';
 import type { ArtistData, ArtistInfo } from '../../types/artist-data.ts';
 import { ArtistCard } from '../../features/artists/ArtistCard.tsx';
-import { getSearchString } from '../../services/local-storage.service.ts';
 import { Pagination } from '../../features/paginaton/Pagination.tsx';
 import './Main.css';
 import { ArtistDetailedCard } from '../../features/artists/ArtistDetailedCard.tsx';
 import { useNavigate, useSearchParams } from 'react-router';
 import { MAIN } from '../../data/path-constants.ts';
+import { useQueryString } from '../../hooks/UseQueryString.tsx';
 
 const composeNavigateLink = (
   pageNumber: number,
@@ -33,9 +33,11 @@ export const MainPage: FC = (): ReactNode => {
     page !== null && /\d+/.test(page) ? +page : 1
   );
   const [pageCount, setPageCount] = useState(1);
+  const { getQuery } = useQueryString();
+
   useEffect(() => {
     navigate(composeNavigateLink(pageNumber, null));
-    loadArtistsData(pageNumber, getSearchString());
+    loadArtistsData(pageNumber, getQuery());
   }, [pageNumber]);
 
   const loadArtistsData = (page: number, searchQuery: string) => {
