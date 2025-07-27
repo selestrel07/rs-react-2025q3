@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router';
 import { AboutPage } from './pages/about/About.tsx';
 import { ABOUT, ANY, MAIN } from './data/path-constants.ts';
 import { NotFoundPage } from './pages/not-found/NotFound.tsx';
+import { Header } from './features/ui/header/Header.tsx';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           </p>
         }
       >
+        <Header />
         <Routes>
           <Route path={MAIN} element={<MainPage />} />
           <Route path={ABOUT} element={<AboutPage />} />
