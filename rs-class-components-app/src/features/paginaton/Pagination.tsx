@@ -6,7 +6,7 @@ export const Pagination: FC<PaginationProperties> = (
   properties: PaginationProperties
 ): ReactNode => {
   if (properties.pageNumber < 1) {
-    properties.setPageNumber(1);
+    properties.navigateToPage(1);
   }
 
   return (
@@ -14,8 +14,10 @@ export const Pagination: FC<PaginationProperties> = (
       <button
         className="button-pagination"
         onClick={() =>
-          properties.setPageNumber((p) =>
-            p > properties.pageCount + 1 ? properties.pageCount : p - 1
+          properties.navigateToPage(
+            properties.pageNumber > properties.pageCount + 1
+              ? properties.pageCount
+              : properties.pageNumber - 1
           )
         }
         disabled={properties.pageNumber === 1}
@@ -25,7 +27,7 @@ export const Pagination: FC<PaginationProperties> = (
       <div className="page-number">{properties.pageNumber}</div>
       <button
         className="button-pagination"
-        onClick={() => properties.setPageNumber((p) => p + 1)}
+        onClick={() => properties.navigateToPage(properties.pageNumber + 1)}
         disabled={properties.pageNumber >= properties.pageCount}
       >
         {'>'}

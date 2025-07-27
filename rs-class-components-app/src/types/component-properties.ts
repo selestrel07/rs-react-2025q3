@@ -1,5 +1,4 @@
 import type { ArtistInfo } from './artist-data.ts';
-import type { Dispatch, SetStateAction } from 'react';
 
 export type ArtistCardProperties = {
   artist: ArtistInfo;
@@ -14,5 +13,5 @@ export type SearchProperties = {
 export type PaginationProperties = {
   pageNumber: number;
   pageCount: number;
-  setPageNumber: Dispatch<SetStateAction<number>>;
+  navigateToPage: (pageNumber: number) => void;
 };

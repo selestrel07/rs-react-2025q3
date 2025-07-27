@@ -36,7 +36,6 @@ export const MainPage: FC = (): ReactNode => {
   const { getQuery } = useQueryString();
 
   useEffect(() => {
-    navigate(composeNavigateLink(pageNumber, null));
     loadArtistsData(pageNumber, getQuery());
   }, [pageNumber]);
 
@@ -57,6 +56,11 @@ export const MainPage: FC = (): ReactNode => {
 
   const navigateToFirstPage = () => {
     const pageNumber = 1;
+    navigate(composeNavigateLink(pageNumber, null));
+    setPageNumber(pageNumber);
+  };
+
+  const navigateToPage = (pageNumber: number) => {
     navigate(composeNavigateLink(pageNumber, null));
     setPageNumber(pageNumber);
   };
@@ -99,7 +103,7 @@ export const MainPage: FC = (): ReactNode => {
           <Pagination
             pageNumber={pageNumber}
             pageCount={pageCount}
-            setPageNumber={setPageNumber}
+            navigateToPage={navigateToPage}
           />
         </div>
         {artistId !== null ? (

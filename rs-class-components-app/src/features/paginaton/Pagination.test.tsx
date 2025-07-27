@@ -15,7 +15,7 @@ describe('Pagination component tests', () => {
       <Pagination
         pageNumber={pageNumber}
         pageCount={100}
-        setPageNumber={setPageNumberMock}
+        navigateToPage={setPageNumberMock}
       />
     );
 
@@ -30,7 +30,7 @@ describe('Pagination component tests', () => {
       <Pagination
         pageNumber={pageNumber}
         pageCount={100}
-        setPageNumber={setPageNumberMock}
+        navigateToPage={setPageNumberMock}
       />
     );
 
@@ -45,7 +45,7 @@ describe('Pagination component tests', () => {
       <Pagination
         pageNumber={pageNumber}
         pageCount={100}
-        setPageNumber={setPageNumberMock}
+        navigateToPage={setPageNumberMock}
       />
     );
 
@@ -60,7 +60,7 @@ describe('Pagination component tests', () => {
       <Pagination
         pageNumber={pageNumber}
         pageCount={100}
-        setPageNumber={setPageNumberMock}
+        navigateToPage={setPageNumberMock}
       />
     );
 
@@ -75,7 +75,7 @@ describe('Pagination component tests', () => {
       <Pagination
         pageNumber={pageNumber}
         pageCount={100}
-        setPageNumber={setPageNumberMock}
+        navigateToPage={setPageNumberMock}
       />
     );
 
