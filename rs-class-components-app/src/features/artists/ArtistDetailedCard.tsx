@@ -1,21 +1,21 @@
 import { type FC, type ReactNode, useEffect, useState } from 'react';
 import type { ArtistInfo } from '../../types/artist-data.ts';
 import { loadArtistDataById } from '../../services/api.service.ts';
-import { Link } from 'react-router';
+import { Link, useSearchParams } from 'react-router';
 import { MAIN } from '../../data/path-constants.ts';
 import './ArtistDetailedCard.css';
 
 type ArtistDetailedCardProperties = {
   id: string;
-  page: number;
 };
 
 export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   id,
-  page,
 }): ReactNode => {
   const [artistData, setArtistData] = useState<ArtistInfo | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [searchParams] = useSearchParams();
+  const pageNumber = searchParams.get('page') ?? '1';
 
   useEffect(() => {
     if (id !== '-1') {
@@ -32,7 +32,7 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
 
   return (
     <div className="detailed-card">
-      <Link to={`${MAIN}?page=${page}`}>Close</Link>
+      <Link to={`${MAIN}?page=${pageNumber}`}>Close</Link>
       {artistData === null ? (
         <p>
           No artist was found by provided id on the page. Please check your

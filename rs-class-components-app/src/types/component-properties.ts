@@ -7,7 +7,6 @@ export type ArtistCardProperties = {
 
 export type SearchProperties = {
   searchArtists: (searchString: string) => void;
-  isLoading: boolean;
 };
 
 export type PaginationProperties = {
