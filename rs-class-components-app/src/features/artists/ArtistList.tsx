@@ -11,6 +11,8 @@ import {
 import type { SearchItem, SearchResult } from '../../types/search-item.ts';
 import { MAIN } from '../../data/path-constants.ts';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
+import { SelectionControls } from './SelectionControls.tsx';
+import { getArtists } from '../../store.ts';
 
 const composeNavigateLink = (
   pageNumber: number,
@@ -90,6 +92,7 @@ export const ArtistList: FC<{
               </p>,
             ]}
       </div>
+      {getArtists().length > 0 ? <SelectionControls /> : undefined}
       <Pagination
         pageNumber={pageNumber}
         pageCount={pageCount}

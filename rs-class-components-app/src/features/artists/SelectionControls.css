@@ -1,0 +1,8 @@
+.selection-controls p {
+  margin-bottom: 0.5rem;
+}
+
+.selection-buttons {
+  display: flex;
+  gap: 1rem;
+}
