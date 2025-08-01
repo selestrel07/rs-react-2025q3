@@ -15,6 +15,9 @@ const artistSlice = createSlice({
         ...state.value.filter((artist) => artist.id !== action.payload.id),
       ];
     },
+    removeAllArtists: (state) => {
+      state.value = [];
+    },
   },
 });
 
@@ -31,5 +34,11 @@ export const removeArtistAction = (payload: ArtistInfo) => {
   return {
     type: 'artists/removeArtist',
     payload,
+  };
+};
+
+export const removeAllArtistsAction = () => {
+  return {
+    type: 'artists/removeAllArtists',
   };
 };

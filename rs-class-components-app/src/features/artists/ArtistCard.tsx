@@ -1,37 +1,27 @@
-import {
-  type FC,
-  type ReactNode,
-  useState,
-  type MouseEvent,
-  useEffect,
-} from 'react';
+import { type FC, type ReactNode, type MouseEvent } from 'react';
 import './ArtistCard.css';
 import type { ArtistCardProperties } from '../../types/component-properties.ts';
-import { getArtists, store } from '../../store.ts';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks.ts';
 import { addArtistAction, removeArtistAction } from './artistSlice.ts';
 
 export const ArtistCard: FC<ArtistCardProperties> = (
   props: ArtistCardProperties
 ): ReactNode => {
-  const appStore = store;
-  const [isSelected, setSelected] = useState(
-    getArtists()
-      .map((artist) => artist.id)
-      .includes(props.artist.id)
-  );
-
-  useEffect(() => {
-    if (isSelected) {
-      appStore.dispatch(addArtistAction(props.artist));
-    } else {
-      appStore.dispatch(removeArtistAction(props.artist));
-    }
-  }, [isSelected, props.artist, appStore]);
+  const selectedArtists = useAppSelector((state) => state.artists.value);
+  const dispatch = useAppDispatch();
+  const isSelected = selectedArtists
+    .map((artist) => artist.id)
+    .includes(props.artist.id);
 
   const handleClick = (e: MouseEvent<HTMLElement>): void => {
     e.stopPropagation();
     props.navigate(props.artist.id);
-    setSelected(!isSelected);
+    const selected = !isSelected;
+    if (selected) {
+      dispatch(addArtistAction(props.artist));
+    } else {
+      dispatch(removeArtistAction(props.artist));
+    }
   };
 
   return (

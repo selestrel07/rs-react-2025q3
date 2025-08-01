@@ -12,7 +12,7 @@ import type { SearchItem, SearchResult } from '../../types/search-item.ts';
 import { MAIN } from '../../data/path-constants.ts';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
 import { SelectionControls } from './SelectionControls.tsx';
-import { getArtists } from '../../store.ts';
+import { useAppSelector } from '../../hooks/store-hooks.ts';
 
 const composeNavigateLink = (
   pageNumber: number,
@@ -35,6 +35,9 @@ export const ArtistList: FC<{
   const [pageCount, setPageCount] = useState(1);
   const [loading, setLoading] = useState<boolean>(false);
   const { getQuery } = useQueryString();
+  const selectedArtistsCount = useAppSelector(
+    (state) => state.artists.value
+  ).length;
 
   useEffect(() => {
     loadArtistsData(pageNumber);
@@ -92,7 +95,7 @@ export const ArtistList: FC<{
               </p>,
             ]}
       </div>
-      {getArtists().length > 0 ? <SelectionControls /> : undefined}
+      {selectedArtistsCount > 0 ? <SelectionControls /> : undefined}
       <Pagination
         pageNumber={pageNumber}
         pageCount={pageCount}
