@@ -9,5 +9,3 @@ export const store = configureStore({
 
 export type AppState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
-
-export const getArtists = () => store.getState().artists.value;
