@@ -44,6 +44,7 @@ export const ArtistCard: FC<ArtistCardProperties> = (
         onChange={handleUpdate}
         onClick={(e) => e.stopPropagation()}
         checked={isSelected}
+        data-testid="artist-checkbox"
       />
       <p>
         <b>Title: </b>

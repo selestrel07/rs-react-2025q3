@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { ArtistCard } from './ArtistCard.tsx';
 import {
   ArtistInfoEmptyDates,
@@ -9,6 +9,7 @@ import { userEvent } from '@testing-library/user-event';
 import { Provider } from 'react-redux';
 import { store } from '../../store.ts';
 import type { ReactNode } from 'react';
+import type { ArtistInfo } from '../../types/artist-data.ts';
 
 const getElementByText = (elementText: string) =>
   screen.getByText(
@@ -31,7 +32,10 @@ describe('ArtistCard render test', () => {
     expect(
       getElementByText(`Birth Date: ${ArtistInfoFull.birth_date}`)
     ).toBeInTheDocument();
-    expect(getElementByText(`Date of Death: ${ArtistInfoFull.death_date}`));
+    expect(
+      getElementByText(`Date of Death: ${ArtistInfoFull.death_date}`)
+    ).toBeInTheDocument();
+    expect(screen.getByTestId('artist-checkbox')).toBeInTheDocument();
   });
 
   it('Should render question mark if date is null', async () => {
@@ -54,5 +58,23 @@ describe('ArtistCard render test', () => {
     await userEvent.click((await screen.findAllByText('Title:'))[0]);
 
     expect(navigateMock).toBeCalled();
+  });
+
+  it('Should add/remove item to/from store on click', async () => {
+    const selector = () => store.getState().artists.value;
+    const getIds = (artists: ArtistInfo[]) =>
+      artists.map((artist) => artist.id);
+    renderElement(
+      <ArtistCard artist={ArtistInfoEmptyDates} navigate={navigateMock} />
+    );
+
+    const checkbox = screen.getByTestId('artist-checkbox');
+    act(() => checkbox.click());
+
+    expect(getIds(selector()).includes(ArtistInfoEmptyDates.id)).toBe(true);
+
+    act(() => checkbox.click());
+
+    expect(getIds(selector()).includes(ArtistInfoEmptyDates.id)).toBe(false);
   });
 });
