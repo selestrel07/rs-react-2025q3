@@ -31,7 +31,7 @@ export const SelectionControls: FC = () => {
     <div className="selection-controls">
       <p>{`${selectedArtistsCount} item${selectedArtistsCount === 1 ? ' is' : 's are'} selected`}</p>
       <div className="selection-buttons">
-        <a ref={ref} />
+        <a data-testid="download-link" ref={ref} />
         <button onClick={() => dispatch(removeAllArtistsAction())}>
           Unselect all
         </button>
