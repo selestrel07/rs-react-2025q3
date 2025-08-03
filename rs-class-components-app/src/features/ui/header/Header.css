@@ -1,9 +1,13 @@
 header {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   width: 100%;
   background-color: #bfddbd;
   padding: 0.5rem;
+}
+
+.theme-dark header {
+  background-color: #788876;
 }
 
 header ul {
