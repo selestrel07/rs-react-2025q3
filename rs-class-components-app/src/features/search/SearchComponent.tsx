@@ -37,11 +37,8 @@ export const SearchComponent: FC<SearchProperties> = (
         value={currentValue}
         placeholder="Type artist information..."
         onChange={handleQueryUpdate}
-        disabled={properties.isLoading}
       />
-      <button onClick={handleSearch} disabled={properties.isLoading}>
-        Search
-      </button>
+      <button onClick={handleSearch}>Search</button>
     </div>
   );
 };

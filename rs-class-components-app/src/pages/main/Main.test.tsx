@@ -4,10 +4,21 @@ import { MainPage } from './Main.tsx';
 import { artistsMockData } from '../../test-utils/test-data.ts';
 import { userEvent } from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router';
+import { Provider } from 'react-redux';
+import { store } from '../../store.ts';
+
+const renderElement = () =>
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <MainPage />
+      </BrowserRouter>
+    </Provider>
+  );
 
 describe('Main page tests', () => {
   it('Should show the empty list message while the data is not received and elements list after the data is received from the API', async () => {
-    render(<MainPage />, { wrapper: BrowserRouter });
+    renderElement();
 
     //Empty list message is shown before the data received from the API
     expect(
@@ -28,13 +39,13 @@ describe('Main page tests', () => {
   });
 
   it('Should render with page number one by default', () => {
-    render(<MainPage />, { wrapper: BrowserRouter });
+    renderElement();
 
     expect(screen.getByText('1')).toBeInTheDocument();
   });
 
   it('Should reset page number after search button click', async () => {
-    render(<MainPage />, { wrapper: BrowserRouter });
+    renderElement();
 
     //switch to the second page
     await userEvent.click(screen.getByRole('button', { name: '>' }));

@@ -8,12 +8,7 @@ const searchArtistsMockFunction = vi.fn();
 
 describe('Search component render tests', () => {
   it('Should render search input and search button', async () => {
-    render(
-      <SearchComponent
-        searchArtists={searchArtistsMockFunction}
-        isLoading={false}
-      />
-    );
+    render(<SearchComponent searchArtists={searchArtistsMockFunction} />);
 
     expect(await screen.findByText('Search')).toBeInTheDocument();
     expect(
@@ -23,12 +18,7 @@ describe('Search component render tests', () => {
 
   it('Should call searchArtists with correct(trimmed) value and save query string in localstorage', async () => {
     const searchString = 'artist';
-    render(
-      <SearchComponent
-        searchArtists={searchArtistsMockFunction}
-        isLoading={false}
-      />
-    );
+    render(<SearchComponent searchArtists={searchArtistsMockFunction} />);
 
     const input = await screen.findByPlaceholderText(
       'Type artist information...'

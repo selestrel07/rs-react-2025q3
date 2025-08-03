@@ -6,10 +6,12 @@
   gap: 0.25rem;
   width: 100%;
   max-width: 600px;
+  margin-bottom: auto;
 }
 
 main {
   display: flex;
   padding: 0 1rem;
   gap: 1rem;
+  min-height: calc(100vh - 65px);
 }
