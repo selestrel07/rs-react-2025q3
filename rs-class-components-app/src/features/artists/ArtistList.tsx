@@ -47,10 +47,10 @@ export const ArtistList: FC<{
     throw error;
   }
 
-  const loadArtistsData = (page: number) => {
+  const loadArtistsData = (page: number, query?: string) => {
     setLoading(true);
     setError(undefined);
-    const searchQuery = getQuery();
+    const searchQuery = query === undefined ? getQuery() : query;
     searchArtistsPage(page, searchQuery)
       .then(async (result: SearchResult) => {
         setPageCount(result.pagination.total_pages);
@@ -71,8 +71,9 @@ export const ArtistList: FC<{
   return (
     <div className="data-container">
       <SearchComponent
-        searchArtists={() => {
+        searchArtists={(query: string): void => {
           navigateToPage(1);
+          loadArtistsData(1, query);
         }}
       />
       <div
