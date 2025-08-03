@@ -6,7 +6,7 @@ import { artistsMockData } from '../../test-utils/test-data.ts';
 
 describe('Artist detailed card tests', () => {
   it('Should render not found message in case of wrong id provided', () => {
-    render(<ArtistDetailedCard id={'-1'} page={0} />, {
+    render(<ArtistDetailedCard id={'-1'} />, {
       wrapper: BrowserRouter,
     });
 
@@ -19,7 +19,7 @@ describe('Artist detailed card tests', () => {
 
   it('Should render information in case of correct id provided', async () => {
     const data = artistsMockData.map((artist) => artist.data)[0];
-    render(<ArtistDetailedCard id={data.id} page={0} />, {
+    render(<ArtistDetailedCard id={data.id} />, {
       wrapper: BrowserRouter,
     });
 
@@ -45,7 +45,7 @@ describe('Artist detailed card tests', () => {
 
   it('Should show alternative titles default text if no alternative titles were provided', async () => {
     const data = artistsMockData.map((artist) => artist.data)[1];
-    render(<ArtistDetailedCard id={data.id} page={0} />, {
+    render(<ArtistDetailedCard id={data.id} />, {
       wrapper: BrowserRouter,
     });
 
@@ -56,7 +56,7 @@ describe('Artist detailed card tests', () => {
 
   it('Should show date default text if no date was provided', async () => {
     const data = artistsMockData.map((artist) => artist.data)[2];
-    render(<ArtistDetailedCard id={data.id} page={0} />, {
+    render(<ArtistDetailedCard id={data.id} />, {
       wrapper: BrowserRouter,
     });
 

@@ -14,3 +14,7 @@ export type PaginationProperties = {
   pageCount: number;
   navigateToPage: (pageNumber: number) => void;
 };
+
+export type ArtistDetailedCardProperties = {
+  id: string;
+};

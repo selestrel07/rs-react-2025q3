@@ -3,11 +3,8 @@ import type { ArtistInfo } from '../../types/artist-data.ts';
 import { loadArtistDataById } from '../../services/api.service.ts';
 import { Link, useSearchParams } from 'react-router';
 import { MAIN } from '../../data/path-constants.ts';
+import type { ArtistDetailedCardProperties } from '../../types/component-properties.ts';
 import './ArtistDetailedCard.css';
-
-type ArtistDetailedCardProperties = {
-  id: string;
-};
 
 export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   id,
