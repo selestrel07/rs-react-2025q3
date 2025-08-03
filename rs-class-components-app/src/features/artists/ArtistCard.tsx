@@ -1,4 +1,10 @@
-import { type FC, type ReactNode, type MouseEvent } from 'react';
+import {
+  type FC,
+  type ReactNode,
+  type MouseEvent,
+  type ChangeEvent,
+  useRef,
+} from 'react';
 import './ArtistCard.css';
 import type { ArtistCardProperties } from '../../types/component-properties.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks.ts';
@@ -12,12 +18,18 @@ export const ArtistCard: FC<ArtistCardProperties> = (
   const isSelected = selectedArtists
     .map((artist) => artist.id)
     .includes(props.artist.id);
+  const ref = useRef<HTMLInputElement | null>(null);
 
   const handleClick = (e: MouseEvent<HTMLElement>): void => {
     e.stopPropagation();
     props.navigate(props.artist.id);
-    const selected = !isSelected;
-    if (selected) {
+    if (ref.current) {
+      ref.current.click();
+    }
+  };
+
+  const handleUpdate = (e: ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.checked) {
       dispatch(addArtistAction(props.artist));
     } else {
       dispatch(removeArtistAction(props.artist));
@@ -26,7 +38,13 @@ export const ArtistCard: FC<ArtistCardProperties> = (
 
   return (
     <div className="card" onClick={handleClick}>
-      <input type="checkbox" checked={isSelected} />
+      <input
+        ref={ref}
+        type="checkbox"
+        onChange={handleUpdate}
+        onClick={(e) => e.stopPropagation()}
+        checked={isSelected}
+      />
       <p>
         <b>Title: </b>
         {props.artist.title}
