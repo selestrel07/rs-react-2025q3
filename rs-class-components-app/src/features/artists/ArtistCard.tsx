@@ -42,7 +42,10 @@ export const ArtistCard: FC<ArtistCardProperties> = (
         ref={ref}
         type="checkbox"
         onChange={handleUpdate}
-        onClick={(e) => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation();
+          props.navigate(props.artist.id);
+        }}
         checked={isSelected}
         data-testid="artist-checkbox"
       />
