@@ -3,7 +3,6 @@ import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const BASE_URL = 'https://api.artic.edu/api/v1/artists/search';
-const BASE_ARTIST_URL = 'https://api.artic.edu/api/v1/agents/';
 const ENTITY_LIMIT = 8;
 
 type SearchParameters = {
@@ -60,8 +59,4 @@ export const loadArtistData = (url: string): Promise<ArtistData> => {
     if (response.status >= 400) throw new Error(response.statusText);
     return response.json();
   });
-};
-
-export const loadArtistDataById = (id: string): Promise<ArtistData> => {
-  return loadArtistData(`${BASE_ARTIST_URL}${id}`);
 };

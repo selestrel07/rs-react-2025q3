@@ -1,6 +1,5 @@
-import { type FC, type ReactNode, useEffect, useState } from 'react';
-import type { ArtistInfo } from '../../types/artist-data.ts';
-import { loadArtistDataById } from '../../services/api.service.ts';
+import { type FC, type ReactNode } from 'react';
+import { useGetArtistQuery } from '../../services/api.service.ts';
 import { Link, useSearchParams } from 'react-router';
 import { MAIN } from '../../data/path-constants.ts';
 import type { ArtistDetailedCardProperties } from '../../types/component-properties.ts';
@@ -9,28 +8,18 @@ import './ArtistDetailedCard.css';
 export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   id,
 }): ReactNode => {
-  const [artistData, setArtistData] = useState<ArtistInfo | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const pageNumber = searchParams.get('page') ?? '1';
+  const { data, isLoading } = useGetArtistQuery(id);
 
-  useEffect(() => {
-    if (id !== '-1') {
-      setLoading(true);
-      loadArtistDataById(id)
-        .then((data) => setArtistData(data.data))
-        .finally(() => setLoading(false));
-    }
-  }, [id]);
-
-  if (loading) {
+  if (isLoading) {
     return <div className="detailed-card">Loading...</div>;
   }
 
   return (
     <div className="detailed-card">
       <Link to={`${MAIN}?page=${pageNumber}`}>Close</Link>
-      {artistData === null ? (
+      {data === null || data === undefined ? (
         <p>
           No artist was found by provided id on the page. Please check your
           information and try again
@@ -41,15 +30,15 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
             <span>
               <b>Title: </b>
             </span>
-            <span>{artistData.title}</span>
+            <span>{data.title}</span>
           </p>
           <p>
             <span>
               <b>Alternative titles: </b>
             </span>
             <span>
-              {artistData.alt_titles
-                ? artistData.alt_titles.join(', ')
+              {data.alt_titles
+                ? data.alt_titles.join(', ')
                 : 'No Alternative titles'}
             </span>
           </p>
@@ -57,13 +46,13 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
             <span>
               <b>Birth Date: </b>
             </span>
-            <span>{artistData.birth_date ?? 'Unknown'}</span>
+            <span>{data.birth_date ?? 'Unknown'}</span>
           </p>
           <p>
             <span>
               <b>Date of Death: </b>
             </span>
-            <span>{artistData.death_date ?? 'Unknown'}</span>
+            <span>{data.death_date ?? 'Unknown'}</span>
           </p>
         </div>
       )}
