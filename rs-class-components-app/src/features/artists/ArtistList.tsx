@@ -84,7 +84,7 @@ export const ArtistList: FC<{
           ? artists.map((item) => (
               <ArtistCard
                 key={item.id}
-                artist={item}
+                id={item.id}
                 navigate={(id: number) =>
                   navigate(composeNavigateLink(pageNumber, id.toString()))
                 }

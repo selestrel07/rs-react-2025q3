@@ -1,7 +1,5 @@
-import type { ArtistInfo } from './artist-data.ts';
-
 export type ArtistCardProperties = {
-  artist: ArtistInfo;
+  id: number;
   navigate: (id: number) => void | Promise<void>;
 };
 
