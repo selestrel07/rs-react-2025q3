@@ -2,20 +2,20 @@ export const ArtistInfoFull = {
   title: 'My artist',
   birth_date: 1965,
   death_date: 2015,
-  id: 159,
+  id: 5,
   description: '',
 };
 
 export const ArtistInfoEmptyDates = {
   title: 'My artist',
-  id: 159,
+  id: 6,
   description: '',
 };
 
 export const artistsMockData = [
   {
     data: {
-      id: '2',
+      id: 2,
       title: 'First Artist',
       alt_titles: ['Alternative Second Artist'],
       birth_date: 1959,
@@ -24,7 +24,7 @@ export const artistsMockData = [
   },
   {
     data: {
-      id: '3',
+      id: 3,
       title: 'Second Artist',
       birth_date: 1859,
       death_date: 1940,
@@ -32,8 +32,14 @@ export const artistsMockData = [
   },
   {
     data: {
-      id: '4',
+      id: 4,
       title: 'Third Artist',
     },
+  },
+  {
+    data: ArtistInfoEmptyDates,
+  },
+  {
+    data: ArtistInfoFull,
   },
 ];

@@ -20,6 +20,12 @@ export const handlers = [
         {
           api_link: 'https://api.artic.edu/api/v1/agents/4',
         },
+        {
+          api_link: 'https://api.artic.edu/api/v1/agents/6',
+        },
+        {
+          api_link: 'https://api.artic.edu/api/v1/agents/5',
+        },
       ],
       pagination: {
         total_pages: 2,
@@ -30,7 +36,7 @@ export const handlers = [
     'https://api.artic.edu/api/v1/agents/:id',
     ({ params }) => {
       const artist = artistsMockData.find(
-        (artist) => artist.data.id === params.id
+        (artist) => artist.data.id === +params.id
       );
       if (!artist) {
         return new HttpResponse(null, { status: 404 });
