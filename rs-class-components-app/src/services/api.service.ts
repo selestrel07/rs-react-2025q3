@@ -3,7 +3,6 @@ import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setPageCount } from '../features/paginaton/paginationSlice.ts';
 
-const BASE_URL = 'https://api.artic.edu/api/v1/artists/search';
 const ENTITY_LIMIT = 8;
 
 type SearchParameters = {
@@ -33,34 +32,3 @@ export const artistsApi = createApi({
 });
 
 export const { useSearchArtistQuery, useGetArtistQuery } = artistsApi;
-
-const composeUrl = (pageNumber: number, queryString?: string): URL => {
-  const url = new URL(BASE_URL);
-  url.searchParams.append('limit', ENTITY_LIMIT.toString());
-  url.searchParams.append('page', pageNumber.toString());
-  if (queryString) {
-    url.searchParams.append('q', queryString);
-  }
-  return url;
-};
-
-export const searchArtists = (queryString?: string): Promise<SearchResult> => {
-  return searchArtistsPage(1, queryString);
-};
-
-export const searchArtistsPage = (
-  pageNumber: number,
-  queryString?: string
-): Promise<SearchResult> => {
-  return fetch(composeUrl(pageNumber, queryString)).then((response) => {
-    if (response.status >= 400) throw new Error(response.statusText);
-    return response.json();
-  });
-};
-
-export const loadArtistData = (url: string): Promise<ArtistData> => {
-  return fetch(url).then((response) => {
-    if (response.status >= 400) throw new Error(response.statusText);
-    return response.json();
-  });
-};
