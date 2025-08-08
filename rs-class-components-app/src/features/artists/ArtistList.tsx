@@ -3,10 +3,7 @@ import { SearchComponent } from '../search/SearchComponent.tsx';
 import { Pagination } from '../paginaton/Pagination.tsx';
 import { useNavigate, useSearchParams } from 'react-router';
 import { ArtistCard } from './ArtistCard.tsx';
-import {
-  searchArtistsPage,
-  useSearchArtistQuery,
-} from '../../services/api.service.ts';
+import { useSearchArtistQuery } from '../../services/api.service.ts';
 import { MAIN } from '../../data/path-constants.ts';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
 import { SelectionControls } from './SelectionControls.tsx';
@@ -26,7 +23,6 @@ export const ArtistList: FC = () => {
     page !== null && /\d+/.test(page) ? +page : 1
   );
   const navigate = useNavigate();
-  const [error, setError] = useState<Error | undefined>(undefined);
   const { getQuery } = useQueryString();
   const selectedArtistsCount = useAppSelector(
     (state) => state.artists.value
@@ -35,16 +31,6 @@ export const ArtistList: FC = () => {
     queryString: getQuery(),
     page: pageNumber,
   });
-
-  if (error) {
-    throw error;
-  }
-
-  const loadArtistsData = (page: number, query?: string) => {
-    setError(undefined);
-    const searchQuery = query === undefined ? getQuery() : query;
-    searchArtistsPage(page, searchQuery).catch(setError);
-  };
 
   const navigateToPage = (pageNumber: number) => {
     navigate(composeNavigateLink(pageNumber, null));
@@ -61,31 +47,30 @@ export const ArtistList: FC = () => {
 
   return (
     <div className="data-container">
-      <SearchComponent
-        searchArtists={(query: string): void => {
-          navigateToPage(1);
-          loadArtistsData(1, query);
-        }}
-      />
+      <SearchComponent navigateToPage={() => navigateToPage(1)} />
       <div
         className="cards-container"
         onClick={() => navigate(composeNavigateLink(pageNumber, null))}
       >
-        {data.data.length > 0
-          ? data.data.map((item) => (
-              <ArtistCard
-                key={item.id}
-                id={item.id}
-                navigate={(id: number) =>
-                  navigate(composeNavigateLink(pageNumber, id.toString()))
-                }
-              />
-            ))
-          : [
-              <p key="empty-message">
-                No results were found for the provided query.
-              </p>,
-            ]}
+        {data === undefined ? (
+          <p>Something went wrong! Please reload page and start again.</p>
+        ) : data.data.length > 0 ? (
+          data.data.map((item) => (
+            <ArtistCard
+              key={item.id}
+              id={item.id}
+              navigate={(id: number) =>
+                navigate(composeNavigateLink(pageNumber, id.toString()))
+              }
+            />
+          ))
+        ) : (
+          [
+            <p key="empty-message">
+              No results were found for the provided query.
+            </p>,
+          ]
+        )}
       </div>
       {selectedArtistsCount > 0 ? <SelectionControls /> : undefined}
       <Pagination pageNumber={pageNumber} navigateToPage={navigateToPage} />

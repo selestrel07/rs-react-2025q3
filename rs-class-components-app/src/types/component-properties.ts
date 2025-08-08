@@ -4,7 +4,7 @@ export type ArtistCardProperties = {
 };
 
 export type SearchProperties = {
-  searchArtists: (searchString: string) => void;
+  navigateToPage: () => void;
 };
 
 export type PaginationProperties = {

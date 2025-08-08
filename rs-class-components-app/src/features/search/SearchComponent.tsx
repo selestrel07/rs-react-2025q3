@@ -5,17 +5,19 @@ import {
   useRef,
   useState,
 } from 'react';
-import { setSearchString } from '../../services/local-storage.service.ts';
-import type { SearchProperties } from '../../types/component-properties.ts';
 import './SearchComponent.css';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
+import type { SearchProperties } from '../../types/component-properties.ts';
+import { useAppDispatch } from '../../hooks/store-hooks.ts';
+import { removeAllArtistsAction } from '../artists/artistSlice.ts';
 
-export const SearchComponent: FC<SearchProperties> = (
-  properties: SearchProperties
-): ReactNode => {
+export const SearchComponent: FC<SearchProperties> = ({
+  navigateToPage,
+}): ReactNode => {
   const { getQuery, setQuery } = useQueryString();
   const [currentValue, setCurrentValue] = useState(getQuery);
   const ref = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
 
   const handleQueryUpdate = (event: ChangeEvent<HTMLInputElement>) => {
     setCurrentValue(event.currentTarget.value);
@@ -25,8 +27,8 @@ export const SearchComponent: FC<SearchProperties> = (
     const trimmedString = currentValue.trim();
     setCurrentValue(trimmedString);
     setQuery(trimmedString);
-    properties.searchArtists(trimmedString);
-    setSearchString(trimmedString);
+    navigateToPage();
+    dispatch(removeAllArtistsAction());
   };
 
   return (
