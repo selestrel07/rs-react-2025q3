@@ -16,7 +16,6 @@ export const useQueryString = () => {
   }, [query]);
 
   const getQuery = () => {
-    console.log(getSearchString());
     return query === '' ? (getSearchString() ?? query) : query;
   };
 
