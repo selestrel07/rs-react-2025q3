@@ -8,6 +8,7 @@ import { MAIN } from '../../data/path-constants.ts';
 import type { ArtistDetailedCardProperties } from '../../types/component-properties.ts';
 import './ArtistDetailedCard.css';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
+import { DataLoadError } from '../ui/data-load-error/DataLoadError.tsx';
 
 export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   id,
@@ -15,7 +16,7 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   const [searchParams] = useSearchParams();
   const pageNumber = searchParams.get('page') ?? '1';
   const { getQuery } = useQueryString();
-  const { data: artistData, isLoading } = useGetArtistQuery(id);
+  const { data: artistData, error, isLoading } = useGetArtistQuery(id);
   const { data: searchData } = useSearchArtistQuery({
     queryString: getQuery(),
     page: +pageNumber,
@@ -28,9 +29,11 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   return (
     <div className="detailed-card">
       <Link to={`${MAIN}?page=${pageNumber}`}>Close</Link>
-      {artistData === null ||
-      artistData === undefined ||
-      !searchData?.data.map((item) => item.id).includes(+id) ? (
+      {error ? (
+        <DataLoadError error={error} />
+      ) : artistData === null ||
+        artistData === undefined ||
+        !searchData?.data.map((item) => item.id).includes(+id) ? (
         <p>
           No artist was found by provided id on the page. Please check your
           information and try again

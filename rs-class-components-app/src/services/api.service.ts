@@ -20,8 +20,12 @@ export const artistsApi = createApi({
       query: ({ queryString, page }) =>
         `artists/search/?limit=${ENTITY_LIMIT}&page=${page}&q=${queryString}`,
       async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
-        const { data } = await queryFulfilled;
-        dispatch(setPageCount(data.pagination.total_pages));
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(setPageCount(data.pagination.total_pages));
+        } catch (error) {
+          console.error(error);
+        }
       },
     }),
     getArtist: build.query<ArtistInfo, string>({

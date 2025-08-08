@@ -8,6 +8,7 @@ import { MAIN } from '../../data/path-constants.ts';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
 import { SelectionControls } from './SelectionControls.tsx';
 import { useAppSelector } from '../../hooks/store-hooks.ts';
+import { DataLoadError } from '../ui/data-load-error/DataLoadError.tsx';
 
 const composeNavigateLink = (
   pageNumber: number,
@@ -27,7 +28,7 @@ export const ArtistList: FC = () => {
   const selectedArtistsCount = useAppSelector(
     (state) => state.artists.value
   ).length;
-  const { data, isLoading } = useSearchArtistQuery({
+  const { data, error, isLoading } = useSearchArtistQuery({
     queryString: getQuery(),
     page: pageNumber,
   });
@@ -37,14 +38,6 @@ export const ArtistList: FC = () => {
     setPageNumber(pageNumber);
   };
 
-  if (data === undefined) {
-    return (
-      <div className="data-container">
-        Something went wrong! Please reload page and start again.
-      </div>
-    );
-  }
-
   return (
     <div className="data-container">
       <SearchComponent navigateToPage={() => navigateToPage(1)} />
@@ -52,9 +45,9 @@ export const ArtistList: FC = () => {
         className="cards-container"
         onClick={() => navigate(composeNavigateLink(pageNumber, null))}
       >
-        {data === undefined ? (
-          <p>Something went wrong! Please reload page and start again.</p>
-        ) : data.data.length > 0 ? (
+        {error ? (
+          <DataLoadError error={error} />
+        ) : data !== undefined && data.data.length > 0 ? (
           data.data.map((item) => (
             <ArtistCard
               key={item.id}

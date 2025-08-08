@@ -10,6 +10,7 @@ import type { ArtistCardProperties } from '../../types/component-properties.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks.ts';
 import { addArtistAction, removeArtistAction } from './artistSlice.ts';
 import { useGetArtistQuery } from '../../services/api.service.ts';
+import { DataLoadError } from '../ui/data-load-error/DataLoadError.tsx';
 
 export const ArtistCard: FC<ArtistCardProperties> = (
   properties: ArtistCardProperties
@@ -20,7 +21,7 @@ export const ArtistCard: FC<ArtistCardProperties> = (
     .map((artist) => artist.id)
     .includes(+properties.id);
   const ref = useRef<HTMLInputElement | null>(null);
-  const { data, isLoading } = useGetArtistQuery(`${properties.id}`);
+  const { data, error, isLoading } = useGetArtistQuery(`${properties.id}`);
 
   const handleClick = (e: MouseEvent<HTMLElement>): void => {
     e.stopPropagation();
@@ -39,6 +40,14 @@ export const ArtistCard: FC<ArtistCardProperties> = (
       }
     }
   };
+
+  if (error) {
+    return (
+      <div className="card" onClick={handleClick}>
+        <DataLoadError error={error} />
+      </div>
+    );
+  }
 
   if (isLoading) {
     return <div className="card">Loading...</div>;
