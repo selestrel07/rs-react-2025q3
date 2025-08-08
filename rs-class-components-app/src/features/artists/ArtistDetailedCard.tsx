@@ -1,16 +1,25 @@
 import { type FC, type ReactNode } from 'react';
-import { useGetArtistQuery } from '../../services/api.service.ts';
+import {
+  useGetArtistQuery,
+  useSearchArtistQuery,
+} from '../../services/api.service.ts';
 import { Link, useSearchParams } from 'react-router';
 import { MAIN } from '../../data/path-constants.ts';
 import type { ArtistDetailedCardProperties } from '../../types/component-properties.ts';
 import './ArtistDetailedCard.css';
+import { useQueryString } from '../../hooks/UseQueryString.tsx';
 
 export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   id,
 }): ReactNode => {
   const [searchParams] = useSearchParams();
   const pageNumber = searchParams.get('page') ?? '1';
-  const { data, isLoading } = useGetArtistQuery(id);
+  const { getQuery } = useQueryString();
+  const { data: artistData, isLoading } = useGetArtistQuery(id);
+  const { data: searchData } = useSearchArtistQuery({
+    queryString: getQuery(),
+    page: +pageNumber,
+  });
 
   if (isLoading) {
     return <div className="detailed-card">Loading...</div>;
@@ -19,7 +28,9 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   return (
     <div className="detailed-card">
       <Link to={`${MAIN}?page=${pageNumber}`}>Close</Link>
-      {data === null || data === undefined ? (
+      {artistData === null ||
+      artistData === undefined ||
+      !searchData?.data.map((item) => item.id).includes(+id) ? (
         <p>
           No artist was found by provided id on the page. Please check your
           information and try again
@@ -30,15 +41,15 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
             <span>
               <b>Title: </b>
             </span>
-            <span>{data.title}</span>
+            <span>{artistData.title}</span>
           </p>
           <p>
             <span>
               <b>Alternative titles: </b>
             </span>
             <span>
-              {data.alt_titles
-                ? data.alt_titles.join(', ')
+              {artistData.alt_titles
+                ? artistData.alt_titles.join(', ')
                 : 'No Alternative titles'}
             </span>
           </p>
@@ -46,13 +57,13 @@ export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
             <span>
               <b>Birth Date: </b>
             </span>
-            <span>{data.birth_date ?? 'Unknown'}</span>
+            <span>{artistData.birth_date ?? 'Unknown'}</span>
           </p>
           <p>
             <span>
               <b>Date of Death: </b>
             </span>
-            <span>{data.death_date ?? 'Unknown'}</span>
+            <span>{artistData.death_date ?? 'Unknown'}</span>
           </p>
         </div>
       )}

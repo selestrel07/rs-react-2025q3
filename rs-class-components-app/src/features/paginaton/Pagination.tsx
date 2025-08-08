@@ -1,10 +1,12 @@
 import { type FC, type ReactNode } from 'react';
 import './Pagination.css';
 import type { PaginationProperties } from '../../types/component-properties.ts';
+import { useAppSelector } from '../../hooks/store-hooks.ts';
 
 export const Pagination: FC<PaginationProperties> = (
   properties: PaginationProperties
 ): ReactNode => {
+  const pageCount = useAppSelector((state) => state.pagination.value);
   if (properties.pageNumber < 1) {
     properties.navigateToPage(1);
   }
@@ -15,8 +17,8 @@ export const Pagination: FC<PaginationProperties> = (
         className="button-pagination"
         onClick={() =>
           properties.navigateToPage(
-            properties.pageNumber > properties.pageCount + 1
-              ? properties.pageCount
+            properties.pageNumber > pageCount + 1
+              ? pageCount
               : properties.pageNumber - 1
           )
         }
@@ -28,7 +30,7 @@ export const Pagination: FC<PaginationProperties> = (
       <button
         className="button-pagination"
         onClick={() => properties.navigateToPage(properties.pageNumber + 1)}
-        disabled={properties.pageNumber >= properties.pageCount}
+        disabled={properties.pageNumber >= pageCount}
       >
         {'>'}
       </button>

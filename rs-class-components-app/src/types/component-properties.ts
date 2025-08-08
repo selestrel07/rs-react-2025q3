@@ -9,7 +9,6 @@ export type SearchProperties = {
 
 export type PaginationProperties = {
   pageNumber: number;
-  pageCount: number;
   navigateToPage: (pageNumber: number) => void;
 };
 

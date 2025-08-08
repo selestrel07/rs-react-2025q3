@@ -1,6 +1,7 @@
-import type { SearchItem, SearchResult } from '../types/search-item.ts';
+import type { SearchResult } from '../types/search-item.ts';
 import type { ArtistData, ArtistInfo } from '../types/artist-data.ts';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { setPageCount } from '../features/paginaton/paginationSlice.ts';
 
 const BASE_URL = 'https://api.artic.edu/api/v1/artists/search';
 const ENTITY_LIMIT = 8;
@@ -16,10 +17,13 @@ export const artistsApi = createApi({
     baseUrl: 'https://api.artic.edu/api/v1/',
   }),
   endpoints: (build) => ({
-    searchArtist: build.query<SearchItem[], SearchParameters>({
+    searchArtist: build.query<SearchResult, SearchParameters>({
       query: ({ queryString, page }) =>
         `artists/search/?limit=${ENTITY_LIMIT}&page=${page}&q=${queryString}`,
-      transformResponse: (rawResult: SearchResult) => rawResult.data,
+      async onQueryStarted(_arg, { dispatch, queryFulfilled }) {
+        const { data } = await queryFulfilled;
+        dispatch(setPageCount(data.pagination.total_pages));
+      },
     }),
     getArtist: build.query<ArtistInfo, string>({
       query: (id: string) => `agents/${id}`,
