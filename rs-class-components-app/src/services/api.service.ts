@@ -15,6 +15,7 @@ export const artistsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.artic.edu/api/v1/',
   }),
+  tagTypes: ['Artist'],
   endpoints: (build) => ({
     searchArtist: build.query<SearchResult, SearchParameters>({
       query: ({ queryString, page }) =>
@@ -27,10 +28,21 @@ export const artistsApi = createApi({
           console.error(error);
         }
       },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map((searchItem) => ({
+                type: 'Artist' as const,
+                id: `${searchItem.id}`,
+              })),
+              { type: 'Artist', id: 'LIST' },
+            ]
+          : [{ type: 'Artist', id: 'LIST' }],
     }),
     getArtist: build.query<ArtistInfo, string>({
       query: (id: string) => `agents/${id}`,
       transformResponse: (rawResult: ArtistData) => rawResult.data,
+      providesTags: (_result, _error, id) => [{ type: 'Artist', id }],
     }),
   }),
 });
