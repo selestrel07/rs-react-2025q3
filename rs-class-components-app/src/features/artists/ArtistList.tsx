@@ -28,7 +28,7 @@ export const ArtistList: FC = () => {
   const selectedArtistsCount = useAppSelector(
     (state) => state.artists.value
   ).length;
-  const { data, error, isLoading } = useSearchArtistQuery({
+  const { data, error, isLoading, isFetching } = useSearchArtistQuery({
     queryString: getQuery(),
     page: pageNumber,
   });
@@ -45,7 +45,9 @@ export const ArtistList: FC = () => {
         className="cards-container"
         onClick={() => navigate(composeNavigateLink(pageNumber, null))}
       >
-        {error ? (
+        {isLoading || isFetching ? (
+          <p>Loading...</p>
+        ) : error ? (
           <DataLoadError error={error} />
         ) : data !== undefined && data.data.length > 0 ? (
           data.data.map((item) => (
@@ -67,7 +69,9 @@ export const ArtistList: FC = () => {
       </div>
       {selectedArtistsCount > 0 ? <SelectionControls /> : undefined}
       <Pagination pageNumber={pageNumber} navigateToPage={navigateToPage} />
-      {isLoading ? <div className="content-blur"></div> : undefined}
+      {isLoading || isFetching ? (
+        <div className="content-blur"></div>
+      ) : undefined}
     </div>
   );
 };
