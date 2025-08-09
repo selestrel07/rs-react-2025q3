@@ -17,13 +17,11 @@ const renderElement = () =>
   );
 
 describe('Main page tests', () => {
-  it('Should show the empty list message while the data is not received and elements list after the data is received from the API', async () => {
+  it('Should show the loading status while the data is not received and elements list after the data is received from the API', async () => {
     renderElement();
 
     //Empty list message is shown before the data received from the API
-    expect(
-      screen.getByText('No results were found for the provided query.')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
 
     await expect(
       screen.findAllByText(

@@ -4,14 +4,18 @@ import { act, render, screen } from '@testing-library/react';
 import { BrowserRouter, MemoryRouter } from 'react-router';
 import { ABOUT } from '../../../data/path-constants.ts';
 import { ThemeContextProvider } from '../../../context/ThemeContext.tsx';
+import { Provider } from 'react-redux';
+import { store } from '../../../store.ts';
 
 describe('Header component tests', () => {
   it('Should contain links to the Main and About pages', () => {
     render(
       <BrowserRouter>
-        <ThemeContextProvider>
-          <Header />
-        </ThemeContextProvider>
+        <Provider store={store}>
+          <ThemeContextProvider>
+            <Header />
+          </ThemeContextProvider>
+        </Provider>
       </BrowserRouter>
     );
 
@@ -22,9 +26,11 @@ describe('Header component tests', () => {
   it('Should contain theme change button', () => {
     render(
       <BrowserRouter>
-        <ThemeContextProvider>
-          <Header />
-        </ThemeContextProvider>
+        <Provider store={store}>
+          <ThemeContextProvider>
+            <Header />
+          </ThemeContextProvider>
+        </Provider>
       </BrowserRouter>
     );
 
@@ -36,9 +42,11 @@ describe('Header component tests', () => {
   it('Should change the app theme on the change theme button click', () => {
     render(
       <MemoryRouter initialEntries={[ABOUT]}>
-        <ThemeContextProvider>
-          <Header />
-        </ThemeContextProvider>
+        <Provider store={store}>
+          <ThemeContextProvider>
+            <Header />
+          </ThemeContextProvider>
+        </Provider>
       </MemoryRouter>
     );
 

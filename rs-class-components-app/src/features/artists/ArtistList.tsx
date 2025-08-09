@@ -60,11 +60,9 @@ export const ArtistList: FC = () => {
             />
           ))
         ) : (
-          [
-            <p key="empty-message">
-              No results were found for the provided query.
-            </p>,
-          ]
+          <p key="empty-message">
+            No results were found for the provided query.
+          </p>
         )}
       </div>
       {selectedArtistsCount > 0 ? <SelectionControls /> : undefined}

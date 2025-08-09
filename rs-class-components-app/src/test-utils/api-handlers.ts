@@ -12,18 +12,23 @@ export const handlers = [
     return HttpResponse.json({
       data: [
         {
+          id: 2,
           api_link: 'https://api.artic.edu/api/v1/agents/2',
         },
         {
+          id: 3,
           api_link: 'https://api.artic.edu/api/v1/agents/3',
         },
         {
+          id: 4,
           api_link: 'https://api.artic.edu/api/v1/agents/4',
         },
         {
+          id: 6,
           api_link: 'https://api.artic.edu/api/v1/agents/6',
         },
         {
+          id: 5,
           api_link: 'https://api.artic.edu/api/v1/agents/5',
         },
       ],

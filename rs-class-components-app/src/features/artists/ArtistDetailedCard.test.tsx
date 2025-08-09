@@ -18,9 +18,7 @@ describe('Artist detailed card tests', () => {
     );
 
     expect(
-      await screen.findByText(
-        'No artist was found by provided id on the page. Please check your information and try again'
-      )
+      await screen.findByText('No data was found by provided parameters')
     ).toBeInTheDocument();
   });
 
@@ -28,7 +26,7 @@ describe('Artist detailed card tests', () => {
     const data = artistsMockData.map((artist) => artist.data)[0];
     render(
       <Provider store={store}>
-        <ArtistDetailedCard id={data.id} />
+        <ArtistDetailedCard id={data.id.toString()} />
       </Provider>,
       {
         wrapper: BrowserRouter,
@@ -59,7 +57,7 @@ describe('Artist detailed card tests', () => {
     const data = artistsMockData.map((artist) => artist.data)[1];
     render(
       <Provider store={store}>
-        <ArtistDetailedCard id={data.id} />
+        <ArtistDetailedCard id={data.id.toString()} />
       </Provider>,
       {
         wrapper: BrowserRouter,
@@ -75,7 +73,7 @@ describe('Artist detailed card tests', () => {
     const data = artistsMockData.map((artist) => artist.data)[2];
     render(
       <Provider store={store}>
-        <ArtistDetailedCard id={data.id} />
+        <ArtistDetailedCard id={data.id.toString()} />
       </Provider>,
       {
         wrapper: BrowserRouter,

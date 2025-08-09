@@ -1,4 +1,6 @@
-export const ArtistInfoFull = {
+import type { ArtistInfo } from '../types/artist-data.ts';
+
+export const ArtistInfoFull: ArtistInfo = {
   title: 'My artist',
   birth_date: 1965,
   death_date: 2015,
@@ -6,7 +8,7 @@ export const ArtistInfoFull = {
   description: '',
 };
 
-export const ArtistInfoEmptyDates = {
+export const ArtistInfoEmptyDates: ArtistInfo = {
   title: 'My artist',
   id: 6,
   description: '',

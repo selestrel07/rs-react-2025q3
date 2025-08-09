@@ -3,12 +3,18 @@ import { render, screen } from '@testing-library/react';
 import { SearchComponent } from './SearchComponent';
 import { userEvent } from '@testing-library/user-event';
 import { getSearchString } from '../../services/local-storage.service.ts';
+import { Provider } from 'react-redux';
+import { store } from '../../store.ts';
 
-const searchArtistsMockFunction = vi.fn();
+const navigateToPageMock = vi.fn();
 
 describe('Search component render tests', () => {
   it('Should render search input and search button', async () => {
-    render(<SearchComponent searchArtists={searchArtistsMockFunction} />);
+    render(
+      <Provider store={store}>
+        <SearchComponent navigateToPage={navigateToPageMock} />
+      </Provider>
+    );
 
     expect(await screen.findByText('Search')).toBeInTheDocument();
     expect(
@@ -18,7 +24,11 @@ describe('Search component render tests', () => {
 
   it('Should call searchArtists with correct(trimmed) value and save query string in localstorage', async () => {
     const searchString = 'artist';
-    render(<SearchComponent searchArtists={searchArtistsMockFunction} />);
+    render(
+      <Provider store={store}>
+        <SearchComponent navigateToPage={navigateToPageMock} />
+      </Provider>
+    );
 
     const input = await screen.findByPlaceholderText(
       'Type artist information...'
@@ -28,7 +38,7 @@ describe('Search component render tests', () => {
     const searchButton = await screen.findByText('Search');
     await userEvent.click(searchButton);
 
-    expect(searchArtistsMockFunction).toBeCalledWith(searchString);
+    expect(navigateToPageMock).toBeCalled();
     expect(getSearchString()).toBe(searchString);
   });
 });
