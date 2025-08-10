@@ -21,7 +21,5 @@ export const DataLoadError: FC<DataLoadErrorProperties> = ({
     return <p>Internal server error. Please try to use app later.</p>;
   }
 
-  return (
-    <p>{'data' in error ? <p>{JSON.stringify(error.data)}</p> : undefined}</p>
-  );
+  return <p>{'data' in error ? JSON.stringify(error.data) : undefined}</p>;
 };

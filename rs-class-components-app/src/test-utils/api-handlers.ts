@@ -9,6 +9,23 @@ export const handlers = [
       return new HttpResponse(null, { status: 404 });
     }
 
+    if (query && query === 'server-error') {
+      return new HttpResponse(null, { status: 500 });
+    }
+
+    if (query && query === 'unknown-error') {
+      return HttpResponse.json(
+        {
+          message: 'unknown-error',
+        },
+        { status: 401 }
+      );
+    }
+
+    if (query && query === 'empty') {
+      return HttpResponse.json({ data: [], pagination: { total_pages: 1 } });
+    }
+
     return HttpResponse.json({
       data: [
         {

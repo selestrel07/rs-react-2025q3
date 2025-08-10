@@ -26,6 +26,8 @@ describe('ArtistCard render test', () => {
       <ArtistCard id={ArtistInfoFull.id} navigate={navigateMock} />
     );
 
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
     expect(
       await findElementByText(`Title: ${ArtistInfoFull.title}`)
     ).toBeInTheDocument();
@@ -79,5 +81,13 @@ describe('ArtistCard render test', () => {
     act(() => checkbox.click());
 
     expect(getIds(selector()).includes(ArtistInfoEmptyDates.id)).toBe(false);
+  });
+
+  it('Should render not found message if there is no artist returned by the API', async () => {
+    renderElement(<ArtistCard id={500} navigate={navigateMock} />);
+
+    expect(
+      await screen.findByText('No data was found by provided parameters')
+    ).toBeInTheDocument();
   });
 });

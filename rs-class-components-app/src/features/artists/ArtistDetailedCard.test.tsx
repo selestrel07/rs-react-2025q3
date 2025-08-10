@@ -82,4 +82,19 @@ describe('Artist detailed card tests', () => {
 
     expect(await screen.findAllByText('Unknown')).toHaveLength(2);
   });
+
+  it('Should render not found message if there is no artist returned by the API', async () => {
+    render(
+      <Provider store={store}>
+        <ArtistDetailedCard id={'500'} />
+      </Provider>,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
+
+    expect(
+      await screen.findByText('No data was found by provided parameters')
+    ).toBeInTheDocument();
+  });
 });
