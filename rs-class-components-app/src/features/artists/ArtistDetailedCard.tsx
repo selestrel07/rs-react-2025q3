@@ -1,36 +1,39 @@
-import { type FC, type ReactNode, useEffect, useState } from 'react';
-import type { ArtistInfo } from '../../types/artist-data.ts';
-import { loadArtistDataById } from '../../services/api.service.ts';
+import { type FC, type ReactNode } from 'react';
+import {
+  useGetArtistQuery,
+  useSearchArtistQuery,
+} from '../../services/api.service.ts';
 import { Link, useSearchParams } from 'react-router';
 import { MAIN } from '../../data/path-constants.ts';
 import type { ArtistDetailedCardProperties } from '../../types/component-properties.ts';
 import './ArtistDetailedCard.css';
+import { useQueryString } from '../../hooks/UseQueryString.tsx';
+import { DataLoadError } from '../ui/data-load-error/DataLoadError.tsx';
 
 export const ArtistDetailedCard: FC<ArtistDetailedCardProperties> = ({
   id,
 }): ReactNode => {
-  const [artistData, setArtistData] = useState<ArtistInfo | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const [searchParams] = useSearchParams();
   const pageNumber = searchParams.get('page') ?? '1';
+  const { getQuery } = useQueryString();
+  const { data: artistData, error, isLoading } = useGetArtistQuery(id);
+  const { data: searchData } = useSearchArtistQuery({
+    queryString: getQuery(),
+    page: +pageNumber,
+  });
 
-  useEffect(() => {
-    if (id !== '-1') {
-      setLoading(true);
-      loadArtistDataById(id)
-        .then((data) => setArtistData(data.data))
-        .finally(() => setLoading(false));
-    }
-  }, [id]);
-
-  if (loading) {
+  if (isLoading) {
     return <div className="detailed-card">Loading...</div>;
   }
 
   return (
     <div className="detailed-card">
       <Link to={`${MAIN}?page=${pageNumber}`}>Close</Link>
-      {artistData === null ? (
+      {error ? (
+        <DataLoadError error={error} />
+      ) : artistData === null ||
+        artistData === undefined ||
+        !searchData?.data.map((item) => item.id).includes(+id) ? (
         <p>
           No artist was found by provided id on the page. Please check your
           information and try again

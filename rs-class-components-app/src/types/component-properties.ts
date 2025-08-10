@@ -1,17 +1,14 @@
-import type { ArtistInfo } from './artist-data.ts';
-
 export type ArtistCardProperties = {
-  artist: ArtistInfo;
+  id: number;
   navigate: (id: number) => void | Promise<void>;
 };
 
 export type SearchProperties = {
-  searchArtists: (searchString: string) => void;
+  navigateToPage: () => void;
 };
 
 export type PaginationProperties = {
   pageNumber: number;
-  pageCount: number;
   navigateToPage: (pageNumber: number) => void;
 };
 

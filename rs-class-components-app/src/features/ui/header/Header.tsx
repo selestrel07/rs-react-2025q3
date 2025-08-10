@@ -6,11 +6,14 @@ import {
   ThemeContext,
   type ThemeContextType,
 } from '../../../context/ThemeContext.tsx';
+import { useAppDispatch } from '../../../hooks/store-hooks.ts';
+import { artistsApi } from '../../../services/api.service.ts';
 
 export const Header: FC = () => {
   const { theme, setTheme } = useContext(
     ThemeContext as Context<ThemeContextType>
   );
+  const dispatch = useAppDispatch();
 
   const getActiveColor = () => (theme === 'light' ? '#ca2b50' : '#f8e8e9');
 
@@ -26,9 +29,18 @@ export const Header: FC = () => {
 
   return (
     <header>
-      <button
-        onClick={handleClick}
-      >{`Change theme to ${theme === 'light' ? 'dark' : 'light'}`}</button>
+      <div>
+        <button
+          onClick={handleClick}
+        >{`Change theme to ${theme === 'light' ? 'dark' : 'light'}`}</button>
+        <button
+          onClick={() =>
+            dispatch(artistsApi.util.invalidateTags([{ type: 'Artist' }]))
+          }
+        >
+          Refetch data
+        </button>
+      </div>
       <ul>
         <li>
           <NavLink style={style} to={`${MAIN}/?page=1`}>

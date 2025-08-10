@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { act, render, screen } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import { ArtistCard } from './ArtistCard.tsx';
 import {
   ArtistInfoEmptyDates,
@@ -11,8 +11,8 @@ import { store } from '../../store.ts';
 import type { ReactNode } from 'react';
 import type { ArtistInfo } from '../../types/artist-data.ts';
 
-const getElementByText = (elementText: string) =>
-  screen.getByText(
+const findElementByText = async (elementText: string) =>
+  await screen.findByText(
     (_, element) => element !== null && element.textContent === elementText
   );
 
@@ -23,36 +23,38 @@ const renderElement = (child: ReactNode) =>
 describe('ArtistCard render test', () => {
   it('Should render artist data', async () => {
     renderElement(
-      <ArtistCard artist={ArtistInfoFull} navigate={navigateMock} />
+      <ArtistCard id={ArtistInfoFull.id} navigate={navigateMock} />
     );
 
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+
     expect(
-      getElementByText(`Title: ${ArtistInfoFull.title}`)
+      await findElementByText(`Title: ${ArtistInfoFull.title}`)
     ).toBeInTheDocument();
     expect(
-      getElementByText(`Birth Date: ${ArtistInfoFull.birth_date}`)
+      await findElementByText(`Birth Date: ${ArtistInfoFull.birth_date}`)
     ).toBeInTheDocument();
     expect(
-      getElementByText(`Date of Death: ${ArtistInfoFull.death_date}`)
+      await findElementByText(`Date of Death: ${ArtistInfoFull.death_date}`)
     ).toBeInTheDocument();
     expect(screen.getByTestId('artist-checkbox')).toBeInTheDocument();
   });
 
   it('Should render question mark if date is null', async () => {
     renderElement(
-      <ArtistCard artist={ArtistInfoEmptyDates} navigate={navigateMock} />
+      <ArtistCard id={ArtistInfoEmptyDates.id} navigate={navigateMock} />
     );
 
     expect(
-      getElementByText(`Title: ${ArtistInfoFull.title}`)
+      await findElementByText(`Title: ${ArtistInfoFull.title}`)
     ).toBeInTheDocument();
-    expect(getElementByText(`Birth Date: ?`)).toBeInTheDocument();
-    expect(getElementByText(`Date of Death: ?`));
+    expect(await findElementByText(`Birth Date: ?`)).toBeInTheDocument();
+    expect(await findElementByText(`Date of Death: ?`));
   });
 
   it('Should trigger navigate function on click', async () => {
     renderElement(
-      <ArtistCard artist={ArtistInfoEmptyDates} navigate={navigateMock} />
+      <ArtistCard id={ArtistInfoEmptyDates.id} navigate={navigateMock} />
     );
 
     await userEvent.click((await screen.findAllByText('Title:'))[0]);
@@ -65,16 +67,27 @@ describe('ArtistCard render test', () => {
     const getIds = (artists: ArtistInfo[]) =>
       artists.map((artist) => artist.id);
     renderElement(
-      <ArtistCard artist={ArtistInfoEmptyDates} navigate={navigateMock} />
+      <ArtistCard id={ArtistInfoEmptyDates.id} navigate={navigateMock} />
     );
 
-    const checkbox = screen.getByTestId('artist-checkbox');
+    const checkbox: HTMLInputElement =
+      await screen.findByTestId('artist-checkbox');
     act(() => checkbox.click());
 
     expect(getIds(selector()).includes(ArtistInfoEmptyDates.id)).toBe(true);
+    expect(checkbox.checked).toBe(true);
 
+    await waitFor(() => checkbox.checked);
     act(() => checkbox.click());
 
     expect(getIds(selector()).includes(ArtistInfoEmptyDates.id)).toBe(false);
+  });
+
+  it('Should render not found message if there is no artist returned by the API', async () => {
+    renderElement(<ArtistCard id={500} navigate={navigateMock} />);
+
+    expect(
+      await screen.findByText('No data was found by provided parameters')
+    ).toBeInTheDocument();
   });
 });

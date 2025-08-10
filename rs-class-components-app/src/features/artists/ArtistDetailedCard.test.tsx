@@ -3,25 +3,35 @@ import { render, screen } from '@testing-library/react';
 import { ArtistDetailedCard } from './ArtistDetailedCard.tsx';
 import { BrowserRouter } from 'react-router';
 import { artistsMockData } from '../../test-utils/test-data.ts';
+import { Provider } from 'react-redux';
+import { store } from '../../store.ts';
 
 describe('Artist detailed card tests', () => {
-  it('Should render not found message in case of wrong id provided', () => {
-    render(<ArtistDetailedCard id={'-1'} />, {
-      wrapper: BrowserRouter,
-    });
+  it('Should render not found message in case of wrong id provided', async () => {
+    render(
+      <Provider store={store}>
+        <ArtistDetailedCard id={'-1'} />
+      </Provider>,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
 
     expect(
-      screen.getByText(
-        'No artist was found by provided id on the page. Please check your information and try again'
-      )
+      await screen.findByText('No data was found by provided parameters')
     ).toBeInTheDocument();
   });
 
   it('Should render information in case of correct id provided', async () => {
     const data = artistsMockData.map((artist) => artist.data)[0];
-    render(<ArtistDetailedCard id={data.id} />, {
-      wrapper: BrowserRouter,
-    });
+    render(
+      <Provider store={store}>
+        <ArtistDetailedCard id={data.id.toString()} />
+      </Provider>,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
 
     expect(screen.getByText('Loading...')).toBeInTheDocument();
 
@@ -45,9 +55,14 @@ describe('Artist detailed card tests', () => {
 
   it('Should show alternative titles default text if no alternative titles were provided', async () => {
     const data = artistsMockData.map((artist) => artist.data)[1];
-    render(<ArtistDetailedCard id={data.id} />, {
-      wrapper: BrowserRouter,
-    });
+    render(
+      <Provider store={store}>
+        <ArtistDetailedCard id={data.id.toString()} />
+      </Provider>,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
 
     expect(
       await screen.findByText('No Alternative titles')
@@ -56,10 +71,30 @@ describe('Artist detailed card tests', () => {
 
   it('Should show date default text if no date was provided', async () => {
     const data = artistsMockData.map((artist) => artist.data)[2];
-    render(<ArtistDetailedCard id={data.id} />, {
-      wrapper: BrowserRouter,
-    });
+    render(
+      <Provider store={store}>
+        <ArtistDetailedCard id={data.id.toString()} />
+      </Provider>,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
 
     expect(await screen.findAllByText('Unknown')).toHaveLength(2);
+  });
+
+  it('Should render not found message if there is no artist returned by the API', async () => {
+    render(
+      <Provider store={store}>
+        <ArtistDetailedCard id={'500'} />
+      </Provider>,
+      {
+        wrapper: BrowserRouter,
+      }
+    );
+
+    expect(
+      await screen.findByText('No data was found by provided parameters')
+    ).toBeInTheDocument();
   });
 });

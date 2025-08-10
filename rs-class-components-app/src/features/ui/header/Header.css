@@ -22,3 +22,9 @@ header a {
   padding: 0.25rem;
   text-decoration: none;
 }
+
+header div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

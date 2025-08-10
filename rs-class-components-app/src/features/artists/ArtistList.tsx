@@ -1,18 +1,14 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useState } from 'react';
 import { SearchComponent } from '../search/SearchComponent.tsx';
 import { Pagination } from '../paginaton/Pagination.tsx';
 import { useNavigate, useSearchParams } from 'react-router';
-import type { ArtistData, ArtistInfo } from '../../types/artist-data.ts';
 import { ArtistCard } from './ArtistCard.tsx';
-import {
-  loadArtistData,
-  searchArtistsPage,
-} from '../../services/api.service.ts';
-import type { SearchItem, SearchResult } from '../../types/search-item.ts';
+import { useSearchArtistQuery } from '../../services/api.service.ts';
 import { MAIN } from '../../data/path-constants.ts';
 import { useQueryString } from '../../hooks/UseQueryString.tsx';
 import { SelectionControls } from './SelectionControls.tsx';
 import { useAppSelector } from '../../hooks/store-hooks.ts';
+import { DataLoadError } from '../ui/data-load-error/DataLoadError.tsx';
 
 const composeNavigateLink = (
   pageNumber: number,
@@ -21,47 +17,21 @@ const composeNavigateLink = (
   return `${MAIN}/?page=${pageNumber}${artistId ? `&artist-id=${artistId}` : ''}`;
 };
 
-export const ArtistList: FC<{
-  artists: ArtistInfo[];
-  setArtists: (artists: ArtistInfo[]) => void;
-}> = ({ artists, setArtists }) => {
+export const ArtistList: FC = () => {
   const [searchParams] = useSearchParams();
   const page = searchParams.get('page');
   const [pageNumber, setPageNumber] = useState(
     page !== null && /\d+/.test(page) ? +page : 1
   );
   const navigate = useNavigate();
-  const [error, setError] = useState<Error | undefined>(undefined);
-  const [pageCount, setPageCount] = useState(1);
-  const [loading, setLoading] = useState<boolean>(false);
   const { getQuery } = useQueryString();
   const selectedArtistsCount = useAppSelector(
     (state) => state.artists.value
   ).length;
-
-  useEffect(() => {
-    loadArtistsData(pageNumber);
-  }, [pageNumber]);
-
-  if (error) {
-    throw error;
-  }
-
-  const loadArtistsData = (page: number, query?: string) => {
-    setLoading(true);
-    setError(undefined);
-    const searchQuery = query === undefined ? getQuery() : query;
-    searchArtistsPage(page, searchQuery)
-      .then(async (result: SearchResult) => {
-        setPageCount(result.pagination.total_pages);
-        const artistsData: ArtistData[] = await Promise.all(
-          result.data.map((item: SearchItem) => loadArtistData(item.api_link))
-        );
-        setArtists(artistsData.map((artistData) => artistData.data));
-      })
-      .catch(setError)
-      .finally(() => setLoading(false));
-  };
+  const { data, error, isLoading, isFetching } = useSearchArtistQuery({
+    queryString: getQuery(),
+    page: pageNumber,
+  });
 
   const navigateToPage = (pageNumber: number) => {
     navigate(composeNavigateLink(pageNumber, null));
@@ -70,39 +40,36 @@ export const ArtistList: FC<{
 
   return (
     <div className="data-container">
-      <SearchComponent
-        searchArtists={(query: string): void => {
-          navigateToPage(1);
-          loadArtistsData(1, query);
-        }}
-      />
+      <SearchComponent navigateToPage={() => navigateToPage(1)} />
       <div
         className="cards-container"
         onClick={() => navigate(composeNavigateLink(pageNumber, null))}
       >
-        {artists.length > 0
-          ? artists.map((item) => (
-              <ArtistCard
-                key={item.id}
-                artist={item}
-                navigate={(id: number) =>
-                  navigate(composeNavigateLink(pageNumber, id.toString()))
-                }
-              />
-            ))
-          : [
-              <p key="empty-message">
-                No results were found for the provided query.
-              </p>,
-            ]}
+        {isLoading || isFetching ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <DataLoadError error={error} />
+        ) : data !== undefined && data.data.length > 0 ? (
+          data.data.map((item) => (
+            <ArtistCard
+              key={item.id}
+              id={item.id}
+              navigate={(id: number) =>
+                navigate(composeNavigateLink(pageNumber, id.toString()))
+              }
+            />
+          ))
+        ) : (
+          <p key="empty-message">
+            No results were found for the provided query.
+          </p>
+        )}
       </div>
       {selectedArtistsCount > 0 ? <SelectionControls /> : undefined}
-      <Pagination
-        pageNumber={pageNumber}
-        pageCount={pageCount}
-        navigateToPage={navigateToPage}
-      />
-      {loading ? <div className="content-blur"></div> : undefined}
+      <Pagination pageNumber={pageNumber} navigateToPage={navigateToPage} />
+      {isLoading || isFetching ? (
+        <div className="content-blur"></div>
+      ) : undefined}
     </div>
   );
 };

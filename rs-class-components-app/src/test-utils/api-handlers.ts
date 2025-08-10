@@ -9,16 +9,44 @@ export const handlers = [
       return new HttpResponse(null, { status: 404 });
     }
 
+    if (query && query === 'server-error') {
+      return new HttpResponse(null, { status: 500 });
+    }
+
+    if (query && query === 'unknown-error') {
+      return HttpResponse.json(
+        {
+          message: 'unknown-error',
+        },
+        { status: 401 }
+      );
+    }
+
+    if (query && query === 'empty') {
+      return HttpResponse.json({ data: [], pagination: { total_pages: 1 } });
+    }
+
     return HttpResponse.json({
       data: [
         {
+          id: 2,
           api_link: 'https://api.artic.edu/api/v1/agents/2',
         },
         {
+          id: 3,
           api_link: 'https://api.artic.edu/api/v1/agents/3',
         },
         {
+          id: 4,
           api_link: 'https://api.artic.edu/api/v1/agents/4',
+        },
+        {
+          id: 6,
+          api_link: 'https://api.artic.edu/api/v1/agents/6',
+        },
+        {
+          id: 5,
+          api_link: 'https://api.artic.edu/api/v1/agents/5',
         },
       ],
       pagination: {
@@ -30,7 +58,7 @@ export const handlers = [
     'https://api.artic.edu/api/v1/agents/:id',
     ({ params }) => {
       const artist = artistsMockData.find(
-        (artist) => artist.data.id === params.id
+        (artist) => artist.data.id === +params.id
       );
       if (!artist) {
         return new HttpResponse(null, { status: 404 });
