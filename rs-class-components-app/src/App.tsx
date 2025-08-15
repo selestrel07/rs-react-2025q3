@@ -1,4 +1,3 @@
-import './App.css';
 import { MainPage } from './pages/main/Main.tsx';
 import { ErrorBoundary } from './features/error-boundary/ErrorBoundary.tsx';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
