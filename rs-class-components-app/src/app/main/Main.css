@@ -1,0 +1,19 @@
+.cards-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: auto;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  padding: 0 1rem;
+  gap: 1rem;
+  min-height: calc(100vh - 65px);
+  width: 100%;
+}
