@@ -21,3 +21,33 @@
 .artist-data.column {
   flex-direction: column;
 }
+
+.detailed-card {
+   display: flex;
+   flex-direction: column;
+   justify-content: start;
+   gap: 1rem;
+   width: 40%;
+   text-align: left;
+   border: 1px solid #a8e1a4;
+   border-radius: 0.5rem;
+   height: fit-content;
+   padding: 1rem;
+ }
+
+.artist-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detailed-card .close {
+  align-self: flex-end;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.detailed-card .close:hover {
+  text-decoration: underline;
+}
