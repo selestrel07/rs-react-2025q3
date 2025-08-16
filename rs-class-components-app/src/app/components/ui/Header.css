@@ -1,0 +1,31 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #bfddbd;
+  padding: 0.5rem;
+}
+
+.theme-dark header {
+  background-color: #788876;
+}
+
+header ul {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+}
+
+header a,
+header span {
+  display: inline-block;
+  height: 100%;
+  padding: 0.25rem;
+  text-decoration: none;
+}
+
+header div {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}

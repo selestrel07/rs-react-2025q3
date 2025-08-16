@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import NavigationButton from './NavigationButton';
+import './Pagination.css';
 
 export default function Pagination({
   currentPage,

@@ -1,5 +1,6 @@
 import { type FC } from 'react';
 import NavigationLink from './NavigationLink';
+import './Header.css';
 
 export const Header: FC = () => {
   return (

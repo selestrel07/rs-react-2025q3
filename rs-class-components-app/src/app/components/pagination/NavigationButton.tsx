@@ -13,6 +13,7 @@ export default function NavigationButton({
   const router = useRouter();
   return (
     <button
+      className="button-pagination"
       onClick={() => router.push(`/main/?page=${nextPage}`)}
       disabled={isDisabled}
     >

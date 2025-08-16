@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import type { ReactNode } from 'react';
+import './ArtistCard.css';
 
 export default function ArtistCard({
   id,
@@ -15,6 +16,7 @@ export default function ArtistCard({
   const router = useRouter();
   return (
     <div
+      className="card"
       onClick={() => router.push(`/main/?page=${pageNumber}&artist-id=${id}`)}
     >
       {children}

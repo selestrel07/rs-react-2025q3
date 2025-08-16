@@ -17,7 +17,7 @@ export default async function ArtistData({
   const artist: ArtistData = await artistData.json();
 
   return (
-    <div className="artist-data">
+    <div className={`artist-data${isDetailed ? ' column' : ''}`}>
       {artistData.status === 404 ? (
         <p>No data was found for the provided id.</p>
       ) : (
