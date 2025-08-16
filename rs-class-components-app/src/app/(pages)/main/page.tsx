@@ -1,7 +1,7 @@
 import { type ReactNode } from 'react';
 import './Main.css';
-import ArtistData from '../components/artist/ArtistData';
-import ArtistList from '../components/artist/ArtistList';
+import ArtistData from '../../components/artist/ArtistData';
+import ArtistList from '../../components/artist/ArtistList';
 type SearchParams = Record<string, string | string[] | undefined>;
 
 export default async function MainPage(props: {
