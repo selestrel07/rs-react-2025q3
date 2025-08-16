@@ -1,7 +1,7 @@
-import type { FC, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import './About.css';
 
-export const AboutPage: FC = (): ReactNode => {
+export default function AboutPage(): ReactNode {
   return (
     <div className="about-container">
       <p>
@@ -33,4 +33,4 @@ export const AboutPage: FC = (): ReactNode => {
       </p>
     </div>
   );
-};
+}
