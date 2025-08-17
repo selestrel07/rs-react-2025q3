@@ -4,11 +4,13 @@ import { type ReactNode } from 'react';
 import './SelectionControls.css';
 import { removeAllArtistsAction } from '../../store/artistSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
+import { useTranslations } from 'next-intl';
 
 export default function SelectionControls(): ReactNode {
   const selectedArtists = useAppSelector((state) => state.artists.value);
   const selectedArtistsCount = selectedArtists.length;
   const dispatch = useAppDispatch();
+  const t = useTranslations('MainPage');
 
   if (selectedArtistsCount === 0) {
     return null;
@@ -16,13 +18,13 @@ export default function SelectionControls(): ReactNode {
 
   return (
     <div className="selection-controls">
-      <p>{`${selectedArtistsCount} item${selectedArtistsCount === 1 ? ' is' : 's are'} selected`}</p>
+      <p>{`${selectedArtistsCount} ${selectedArtistsCount === 1 ? t('single-select') : t('multiple-select')}`}</p>
       <div className="selection-buttons">
         <button onClick={() => dispatch(removeAllArtistsAction())}>
-          Unselect all
+          {t('unselect')}
         </button>
-        <a href={`/api/download/?ids=${selectedArtists.join(',')}`} download>
-          <button>Download</button>
+        <a href={`/en/api/download/?ids=${selectedArtists.join(',')}`} download>
+          <button>{t('download')}</button>
         </a>
       </div>
     </div>

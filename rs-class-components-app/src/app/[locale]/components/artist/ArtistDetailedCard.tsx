@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 export default function ArtistDetailedCard({
   pageNumber,
@@ -11,13 +12,14 @@ export default function ArtistDetailedCard({
   children: ReactNode;
 }) {
   const router = useRouter();
+  const t = useTranslations('MainPage');
   return (
     <div className="detailed-card">
       <span
         className="close"
         onClick={() => router.push(`/main/?page=${pageNumber}`)}
       >
-        Close
+        {t('close')}
       </span>
       {children}
     </div>

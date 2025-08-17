@@ -3,6 +3,7 @@
 import { type ChangeEvent, type ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import './Search.css';
+import { useTranslations } from 'next-intl';
 
 const REACT_CLASS_COMPONENTS_SEARCH_STRING =
   'react-class-components-search-string';
@@ -13,6 +14,7 @@ export default function Search(): ReactNode {
   const handleUserInput = (e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   };
+  const t = useTranslations('MainPage');
 
   useEffect(() => {
     const query = localStorage.getItem(REACT_CLASS_COMPONENTS_SEARCH_STRING);
@@ -36,7 +38,7 @@ export default function Search(): ReactNode {
         placeholder="Type artist information..."
         onChange={handleUserInput}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button onClick={handleSearch}>{t('search')}</button>
     </div>
   );
 }

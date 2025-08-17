@@ -25,6 +25,15 @@ header span {
 }
 
 header span {
+  color: #8a2015;
+}
+
+header a,
+header a:visited {
+  color: #246e15;
+}
+
+header span {
   cursor: default;
 }
 

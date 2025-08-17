@@ -15,7 +15,6 @@ export default async function ArtistList({
   query: string;
   pageNumber: string;
 }): Promise<ReactNode> {
-  console.log(pageNumber, query);
   const response = await fetch(
     `https://api.artic.edu/api/v1/artists/search/?limit=${ENTITY_LIMIT}&page=${pageNumber}&q=${query}`,
     {

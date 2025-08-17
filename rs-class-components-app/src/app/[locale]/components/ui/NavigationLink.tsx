@@ -2,7 +2,7 @@
 
 import type { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-import Link from 'next/link';
+import { Link } from '../../../../i18n/navigation';
 
 export default function NavigationLink({
   href,
@@ -13,7 +13,7 @@ export default function NavigationLink({
 }) {
   const path = usePathname();
 
-  if (path && href.startsWith(path)) {
+  if (path && href.startsWith('/' + path.split('/')[2])) {
     return <span>{children}</span>;
   }
 
