@@ -6,7 +6,7 @@ header {
   padding: 0.5rem;
 }
 
-.theme-dark header {
+.dark header {
   background-color: #788876;
 }
 
@@ -22,6 +22,10 @@ header span {
   height: 100%;
   padding: 0.25rem;
   text-decoration: none;
+}
+
+header span {
+  cursor: default;
 }
 
 header div {

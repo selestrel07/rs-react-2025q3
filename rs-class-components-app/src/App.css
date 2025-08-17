@@ -24,11 +24,11 @@
   border-radius: 0.5rem;
 }
 
-.theme-dark {
+.dark {
   background-color: #2b2e2b;
 }
 
-.theme-dark .page-wrapper {
+.dark .page-wrapper {
   background-color: #3f433f;
   color: #4be42e;
 }
@@ -43,14 +43,14 @@ button {
   transition: all 0.2s ease-in-out;
 }
 
-.theme-dark button {
+.dark button {
   background: #1d251d;
   color: #4be42e;
   border-color: #98ff84;
 }
 
-.theme-dark a {
-  color: #fff;
+.dark a {
+  color: #fab1b1;
 }
 
 button:hover {
@@ -88,6 +88,6 @@ input {
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-.theme-dark .content-blur {
+.dark .content-blur {
   background-color: rgba(106, 106, 106, 0.3);
 }

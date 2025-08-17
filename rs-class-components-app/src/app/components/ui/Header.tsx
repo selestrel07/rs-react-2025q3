@@ -1,10 +1,14 @@
-import { type FC } from 'react';
+import type { ReactNode } from 'react';
 import NavigationLink from './NavigationLink';
 import './Header.css';
+import ThemeButton from './ThemeButton';
 
-export const Header: FC = () => {
+export default function Header(): ReactNode {
   return (
     <header>
+      <div>
+        <ThemeButton />
+      </div>
       <ul>
         <li>
           <NavigationLink href={`/main/?page=1`}>Main</NavigationLink>
@@ -15,4 +19,4 @@ export const Header: FC = () => {
       </ul>
     </header>
   );
-};
+}
