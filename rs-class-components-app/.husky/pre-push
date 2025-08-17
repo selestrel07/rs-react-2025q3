@@ -1,7 +1,0 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
-echo "Running Vitest before push..."
-cd rs-class-components-app
-
-npx vitest run
