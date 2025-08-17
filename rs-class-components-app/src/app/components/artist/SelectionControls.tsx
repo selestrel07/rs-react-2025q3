@@ -2,8 +2,8 @@
 
 import { type ReactNode } from 'react';
 import './SelectionControls.css';
-import { removeAllArtistsAction } from '../../store/artistSlice.ts';
-import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks.ts';
+import { removeAllArtistsAction } from '../../store/artistSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks';
 import Link from 'next/link';
 
 export default function SelectionControls(): ReactNode {
