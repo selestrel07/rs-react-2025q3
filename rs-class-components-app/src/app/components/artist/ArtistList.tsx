@@ -4,6 +4,7 @@ import Pagination from '../pagination/Pagination';
 import ArtistCard from './ArtistCard';
 import ArtistData from './ArtistData';
 import SelectionControls from './SelectionControls';
+import Search from '../search/Search';
 
 const ENTITY_LIMIT = 8;
 
@@ -28,6 +29,7 @@ export default async function ArtistList({
 
   return (
     <div className="data-container">
+      <Search />
       <div className="cards-container">
         {artists.data.length > 0 ? (
           artists.data.map((artist) => (
