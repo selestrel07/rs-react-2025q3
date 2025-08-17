@@ -3,7 +3,6 @@ import type { ReactNode } from 'react';
 import Pagination from '../pagination/Pagination';
 import ArtistCard from './ArtistCard';
 import ArtistData from './ArtistData';
-import StoreProvider from '../../store/StoreProvider';
 import SelectionControls from './SelectionControls';
 
 const ENTITY_LIMIT = 8;
@@ -28,29 +27,23 @@ export default async function ArtistList({
   const artists: SearchResult = await response.json();
 
   return (
-    <StoreProvider>
-      <div className="data-container">
-        <div className="cards-container">
-          {artists.data.length > 0 ? (
-            artists.data.map((artist) => (
-              <ArtistCard
-                key={artist.id}
-                id={artist.id}
-                pageNumber={pageNumber}
-              >
-                <ArtistData id={artist.id} isDetailed={false} />
-              </ArtistCard>
-            ))
-          ) : (
-            <p>No data.</p>
-          )}
-        </div>
-        <SelectionControls />
-        <Pagination
-          currentPage={+pageNumber}
-          totalPages={artists.pagination.total_pages}
-        />
+    <div className="data-container">
+      <div className="cards-container">
+        {artists.data.length > 0 ? (
+          artists.data.map((artist) => (
+            <ArtistCard key={artist.id} id={artist.id} pageNumber={pageNumber}>
+              <ArtistData id={artist.id} isDetailed={false} />
+            </ArtistCard>
+          ))
+        ) : (
+          <p>No data.</p>
+        )}
       </div>
-    </StoreProvider>
+      <SelectionControls />
+      <Pagination
+        currentPage={+pageNumber}
+        totalPages={artists.pagination.total_pages}
+      />
+    </div>
   );
 }
