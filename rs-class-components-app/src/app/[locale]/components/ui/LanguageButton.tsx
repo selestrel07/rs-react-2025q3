@@ -1,7 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { usePathname } from '../../../../i18n/navigation';
+import { usePathname, useRouter } from '../../../../i18n/navigation';
 import { useLocale } from 'use-intl';
 
 export default function LanguageButton() {
@@ -11,11 +10,7 @@ export default function LanguageButton() {
   const newLocale = locale === 'en' ? 'ru' : 'en';
 
   const handleClick = () => {
-    const pathChunks = pathname.split('/');
-    pathChunks[1] = newLocale;
-    const newPathname = pathChunks.join('/');
-
-    router.push(newPathname);
+    router.push(`${pathname}${window.location.search}`, { locale: newLocale });
   };
 
   return (

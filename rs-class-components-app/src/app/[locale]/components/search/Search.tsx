@@ -1,7 +1,7 @@
 'use client';
 
 import { type ChangeEvent, type ReactNode, useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '../../../../i18n/navigation';
 import './Search.css';
 import { useTranslations } from 'next-intl';
 import { useAppDispatch } from '../../hooks/store-hooks';
