@@ -14,8 +14,13 @@
   transform: scale(1.05);
 }
 
+.card input {
+  cursor: pointer;
+}
+
 .artist-data {
   display: flex;
+  gap: 0.5rem;
 }
 
 .artist-data.column {
@@ -25,7 +30,7 @@
 .detailed-card {
    display: flex;
    flex-direction: column;
-   justify-content: start;
+   justify-content: flex-start;
    gap: 1rem;
    width: 40%;
    text-align: left;
@@ -34,12 +39,6 @@
    height: fit-content;
    padding: 1rem;
  }
-
-.artist-info {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
 
 .detailed-card .close {
   align-self: flex-end;

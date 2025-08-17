@@ -1,18 +1,17 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { ArtistInfo } from '../../types/artist-data.ts';
 
 const artistSlice = createSlice({
   name: 'artists',
   initialState: {
-    value: [] as ArtistInfo[],
+    value: [] as number[],
   },
   reducers: {
-    addArtist: (state, action: PayloadAction<ArtistInfo>) => {
+    addArtist: (state, action: PayloadAction<number>) => {
       state.value = [...state.value, action.payload];
     },
-    removeArtist: (state, action: PayloadAction<ArtistInfo>) => {
+    removeArtist: (state, action: PayloadAction<number>) => {
       state.value = [
-        ...state.value.filter((artist) => artist.id !== action.payload.id),
+        ...state.value.filter((artist) => artist !== action.payload),
       ];
     },
     removeAllArtists: (state) => {
@@ -23,14 +22,14 @@ const artistSlice = createSlice({
 
 export const artistsReducer = artistSlice.reducer;
 
-export const addArtistAction = (payload: ArtistInfo) => {
+export const addArtistAction = (payload: number) => {
   return {
     type: 'artists/addArtist',
     payload,
   };
 };
 
-export const removeArtistAction = (payload: ArtistInfo) => {
+export const removeArtistAction = (payload: number) => {
   return {
     type: 'artists/removeArtist',
     payload,
