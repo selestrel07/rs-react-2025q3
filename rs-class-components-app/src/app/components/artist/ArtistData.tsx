@@ -1,5 +1,6 @@
 import type { ArtistData } from '../../../types/artist-data';
 import type { ReactNode } from 'react';
+import { fetchArtistData } from '../../api/data-fetch';
 
 export default async function ArtistData({
   id,
@@ -8,13 +9,7 @@ export default async function ArtistData({
   id: number;
   isDetailed: boolean;
 }): Promise<ReactNode> {
-  const artistData = await fetch(`https://api.artic.edu/api/v1/agents/${id}`, {
-    cache: 'force-cache',
-    next: {
-      revalidate: 3600,
-      tags: ['artist'],
-    },
-  });
+  const artistData = await fetchArtistData(id);
   const artist: ArtistData = await artistData.json();
 
   return (

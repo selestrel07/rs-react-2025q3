@@ -4,6 +4,7 @@ import { type ReactNode } from 'react';
 import './SelectionControls.css';
 import { removeAllArtistsAction } from '../../store/artistSlice.ts';
 import { useAppDispatch, useAppSelector } from '../../hooks/store-hooks.ts';
+import Link from 'next/link';
 
 export default function SelectionControls(): ReactNode {
   const selectedArtists = useAppSelector((state) => state.artists.value);
@@ -21,7 +22,9 @@ export default function SelectionControls(): ReactNode {
         <button onClick={() => dispatch(removeAllArtistsAction())}>
           Unselect all
         </button>
-        <button>Download</button>
+        <Link href={`/api/download/?ids=${selectedArtists.join(',')}`}>
+          <button>Download</button>
+        </Link>
       </div>
     </div>
   );

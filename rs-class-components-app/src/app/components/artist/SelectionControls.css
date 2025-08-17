@@ -6,7 +6,3 @@
   display: flex;
   gap: 1rem;
 }
-
-.selection-buttons a {
-  display: none;
-}
