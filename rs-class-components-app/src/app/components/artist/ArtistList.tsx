@@ -22,6 +22,7 @@ export default async function ArtistList({
       cache: 'force-cache',
       next: {
         revalidate: 3600,
+        tags: ['artist'],
       },
     }
   );

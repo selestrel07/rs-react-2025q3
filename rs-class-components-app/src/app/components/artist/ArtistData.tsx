@@ -12,6 +12,7 @@ export default async function ArtistData({
     cache: 'force-cache',
     next: {
       revalidate: 3600,
+      tags: ['artist'],
     },
   });
   const artist: ArtistData = await artistData.json();
