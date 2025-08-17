@@ -4,6 +4,7 @@ import Pagination from '../pagination/Pagination';
 import ArtistCard from './ArtistCard';
 import ArtistData from './ArtistData';
 import StoreProvider from '../../store/StoreProvider';
+import SelectionControls from './SelectionControls';
 
 const ENTITY_LIMIT = 8;
 
@@ -43,11 +44,12 @@ export default async function ArtistList({
           ) : (
             <p>No data.</p>
           )}
-          <Pagination
-            currentPage={+pageNumber}
-            totalPages={artists.pagination.total_pages}
-          />
         </div>
+        <SelectionControls />
+        <Pagination
+          currentPage={+pageNumber}
+          totalPages={artists.pagination.total_pages}
+        />
       </div>
     </StoreProvider>
   );
