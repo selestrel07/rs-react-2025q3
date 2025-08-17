@@ -1,4 +1,4 @@
-import type { SearchResult } from '../../../types/search-item';
+import type { SearchResult } from '../../types/search-item';
 import type { ReactNode } from 'react';
 import Pagination from '../pagination/Pagination';
 import ArtistCard from './ArtistCard';

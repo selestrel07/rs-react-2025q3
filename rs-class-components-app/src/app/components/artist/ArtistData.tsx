@@ -1,4 +1,4 @@
-import type { ArtistData } from '../../../types/artist-data';
+import type { ArtistData } from '../../types/artist-data';
 import type { ReactNode } from 'react';
 import { fetchArtistData } from '../../api/data-fetch';
 

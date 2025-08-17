@@ -1,5 +1,5 @@
 import { fetchArtistData } from '../data-fetch';
-import type { ArtistData } from '../../../types/artist-data';
+import type { ArtistData } from '../../types/artist-data';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
