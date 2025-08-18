@@ -4,14 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint ./src",
-    "preview": "vite preview",
     "format:fix": "prettier --write ./src",
-    "prepare": "cd .. && husky rs-class-components-app/.husky",
-    "test": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "prepare": "cd .. && husky rs-class-components-app/.husky"
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
@@ -20,6 +18,8 @@
     "**/*{ts,tsx,css,scss}.": "prettier --write"
   },
   "dependencies": {
+    "next": "^15.4.6",
+    "next-intl": "^4.3.4",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
