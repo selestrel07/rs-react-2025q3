@@ -15,7 +15,6 @@ export default tseslint.config([
     extends: [
       js.configs.recommended,
       ...tseslint.configs.strict,
-      eslintPluginPrettier,
     ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -26,6 +25,7 @@ export default tseslint.config([
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       "react-compiler": reactCompiler,
+      eslintPluginPrettier,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
