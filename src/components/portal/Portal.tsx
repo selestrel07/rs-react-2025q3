@@ -21,11 +21,11 @@ const Portal: FC<{
   return createPortal(
     <div
       onClick={close}
-      className="absolute bg-gray-100 w-screen min-h-screen z-50 top-0 p-1"
+      className="absolute flex justify-center items-center bg-gray-100 w-screen min-h-screen z-50 top-0 p-1"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="flex flex-col justify-start items-end gap-2.5 w-8/12 min-h-full mx-auto p-6 border-1 border-gray-400 rounded-2xl"
+        className="flex flex-col justify-start items-end gap-2.5 w-1/2 min-h-full p-6 border-1 border-gray-400 rounded-2xl"
       >
         <Button onClick={() => close()}>Close</Button>
         {children}

@@ -2,6 +2,7 @@ import './App.css';
 import Button from './components/button/Button.tsx';
 import Portal from './components/portal/Portal.tsx';
 import { useState } from 'react';
+import UncontrolledForm from './components/forms/uncontrolled-form.tsx';
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,7 +18,7 @@ function App() {
       <Button onClick={() => handleClick(true)}>Open Uncontrolled Form</Button>
       <Button onClick={() => handleClick(false)}>Open React Hook Form</Button>
       <Portal isOpen={isOpen} close={() => setIsOpen(false)}>
-        {isUncontrolled ? 'Uncontrolled' : 'React Hook Form'}
+        {isUncontrolled ? <UncontrolledForm /> : 'React Hook Form'}
       </Portal>
     </div>
   );
