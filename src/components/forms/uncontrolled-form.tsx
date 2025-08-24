@@ -3,8 +3,10 @@ import Field from '../field/Field.tsx';
 import Input from '../input/Input.tsx';
 import Radio from '../radio/Radio.tsx';
 import Select from '../select/Select.tsx';
+import { useAppSelector } from '../../hooks/store-hooks.ts';
 
 const UncontrolledForm: FC = () => {
+  const countries = useAppSelector(state => state.countries.value);
   return (
     <form className="w-10/12 self-center flex flex-col gap-2.5">
       <Field labelText="Name *" htmlFor="name">
@@ -20,7 +22,7 @@ const UncontrolledForm: FC = () => {
         <Radio options={['male', 'female', 'other']} name="gender" />
       </Field>
       <Field labelText="Country * " htmlFor="country">
-        <Select id="country" options={['USA', 'Spain']}/>
+        <Select id="country" options={countries}/>
       </Field>
       <Field labelText="Password * " htmlFor="password">
         <Input id="password" name="password" type="password" />
