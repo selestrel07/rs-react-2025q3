@@ -1,6 +1,5 @@
 import { type FC, type ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import Button from '../button/Button.tsx';
 
 const Portal: FC<{
   children: ReactNode;
@@ -16,7 +15,12 @@ const Portal: FC<{
     document.addEventListener('keydown', listener);
     return () => document.removeEventListener('keydown', listener);
   }, [isOpen]);
-  if (!isOpen) return null;
+  if (!isOpen) {
+    document.body.style.overflow = '';
+    return null;
+  } else {
+    document.body.style.overflow = 'hidden';
+  }
 
   return createPortal(
     <div
@@ -27,7 +31,6 @@ const Portal: FC<{
         onClick={(e) => e.stopPropagation()}
         className="flex flex-col justify-start items-end gap-2.5 w-1/2 min-h-full p-6 border-1 border-gray-400 rounded-2xl"
       >
-        <Button onClick={() => close()}>Close</Button>
         {children}
       </div>
     </div>,

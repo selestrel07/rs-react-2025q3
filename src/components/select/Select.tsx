@@ -14,6 +14,7 @@ const Select: FC<{ id: string; options: string[] }> = ({ id, options }) => {
         list={`${id}-list`}
         value={value}
         onChange={handleChange}
+        name={id}
       />
       <datalist id={`${id}-list`}>
         {options.map((option) => (
