@@ -23,7 +23,7 @@ const Main: FC = () => {
             <Button onClick={() => setIsOpen(false)}>Close</Button>
           </UncontrolledForm>
         ) : (
-          <ReactHookForm  onSubmit={() => setIsOpen(false)}>
+          <ReactHookForm onSubmit={() => setIsOpen(false)}>
             <Button onClick={() => setIsOpen(false)}>Close</Button>
           </ReactHookForm>
         )}
