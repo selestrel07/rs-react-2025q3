@@ -16,6 +16,7 @@ const Radio: FC<{ options: string[]; name: string }> = ({ options, name }) => {
               type="radio"
               id={option}
               name={name}
+              value={option}
               defaultChecked={i === 0}
             />
             <div className="pointer-events-none col-start-1 row-start-1 w-2 h-2 rounded-full peer-checked:bg-amber-400"></div>
