@@ -1,9 +1,28 @@
-import { type FC, Fragment } from 'react';
+import { type FC, Fragment, useState } from 'react';
 
-const Radio: FC<{ options: string[]; name: string }> = ({ options, name }) => {
+const Radio: FC<{
+  options: string[];
+  name: string;
+  error?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+}> = ({ options, name, value, onChange }) => {
+  const [uncontrolledValue, setUncontrolledValue] = useState(options[0]);
+
+  const isControlled = value !== undefined;
+  const selectedValue = isControlled ? value : uncontrolledValue;
+
+  const handleChange = (val: string) => {
+    if (isControlled) {
+      onChange?.(val);
+    } else {
+      setUncontrolledValue(val);
+      onChange?.(val);
+    }
+  };
   return (
     <>
-      {options.map((option, i) => (
+      {options.map((option) => (
         <Fragment key={option}>
           <label
             className="text-amber-700 cursor-pointer"
@@ -17,7 +36,8 @@ const Radio: FC<{ options: string[]; name: string }> = ({ options, name }) => {
               id={option}
               name={name}
               value={option}
-              defaultChecked={i === 0}
+              checked={selectedValue === option}
+              onChange={() => handleChange(option)}
             />
             <div className="pointer-events-none col-start-1 row-start-1 w-2 h-2 rounded-full peer-checked:bg-amber-400"></div>
           </div>

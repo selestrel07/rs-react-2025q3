@@ -2,6 +2,7 @@ import { type FC, useState } from 'react';
 import Button from '../button/Button.tsx';
 import UncontrolledForm from '../forms/UncontrolledForm.tsx';
 import Portal from '../portal/Portal.tsx';
+import ReactHookForm from '../forms/ReactHookForm.tsx';
 
 const Main: FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,9 @@ const Main: FC = () => {
             <Button onClick={() => setIsOpen(false)}>Close</Button>
           </UncontrolledForm>
         ) : (
-          'React Hook Form'
+          <ReactHookForm  onSubmit={() => setIsOpen(false)}>
+            <Button onClick={() => setIsOpen(false)}>Close</Button>
+          </ReactHookForm>
         )}
       </Portal>
     </div>

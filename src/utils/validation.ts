@@ -1,6 +1,6 @@
 import { mixed, number, string, ValidationError } from 'yup';
 
-const nameSchema = string()
+export const nameSchema = string()
   .required('Name is required')
   .min(2, 'Name length should be greater than 1')
   .test({
@@ -32,7 +32,7 @@ const nameSchema = string()
     },
   });
 
-const ageSchema = number()
+export const ageSchema = number()
   .transform((value, originalValue) =>
     String(originalValue).trim() === '' ? null : value
   )
@@ -41,11 +41,11 @@ const ageSchema = number()
   .min(0, 'Age cannot be negative')
   .max(120, "You are not a vampire, aren't you?");
 
-const emailSchema = string()
+export const emailSchema = string()
   .required('Email is required')
   .email('Not a valid email address');
 
-const passwordSchema = string()
+export const passwordSchema = string()
   .required('Password is required')
   .min(8, 'Password must be at least 8 characters')
   .test({
@@ -79,9 +79,9 @@ const passwordSchema = string()
 const FILE_SIZE = 1024 * 1024 * 3;
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
-const pictureSchema = mixed<File>()
+export const pictureSchema = mixed<File>()
   .test('fileName', 'Picture is required', (file) => {
-    return file ? file.name.length > 0 : false;
+    return file && file instanceof File ? file.name.length > 0 : false;
   })
   .test('fileSize', 'File too large', (file) => {
     return file ? file.size < FILE_SIZE : false;
@@ -90,7 +90,7 @@ const pictureSchema = mixed<File>()
     return file ? SUPPORTED_FORMATS.includes(file.type) : false;
   });
 
-const termsAndConditionsSchema = string()
+export const termsAndConditionsSchema = string()
   .required('You should accept terms and conditions')
   .oneOf(['on'],'You should accept terms and conditions');
 
