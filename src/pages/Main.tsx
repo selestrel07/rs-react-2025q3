@@ -5,6 +5,7 @@ import { loadData } from '../services/api.ts';
 import Table from '../components/table/Table.tsx';
 import { useAppDispatch } from '../hooks/app-hooks.ts';
 import { setYear } from '../store/yearSlice.ts';
+import Header from '../components/header/Header.tsx';
 
 const Main: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,9 +20,12 @@ const Main: FC = () => {
   }, [data]);
 
   return (
-    <main>
-      <Table statistics={data} />
-    </main>
+    <>
+      <Header data={data}/>
+      <main className="p-2.5">
+        <Table statistics={data} />
+      </main>
+    </>
   );
 };
 

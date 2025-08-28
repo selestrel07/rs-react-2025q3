@@ -18,7 +18,7 @@ const Head: FC = () => {
   };
 
   return (
-    <thead className="sticky top-0">
+    <thead className="sticky top-10">
       <tr className="bg-green-100">
         <Cell onClick={() => handleClick('country')} isSortable={true} isHeadCell={true}>
           Country
