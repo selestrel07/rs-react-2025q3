@@ -44,7 +44,7 @@ const Table: FC<{ statistics: StatisticsWithCountryName[] }> = ({
       <Head />
       <tbody>
         {statisticsByYear &&
-          statisticsByYear.map((stats) => <Row statistics={stats} />)}
+          statisticsByYear.map((stats) => <Row key={stats.country} statistics={stats} />)}
       </tbody>
     </table>
   );
