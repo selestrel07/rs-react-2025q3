@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 import type {
   StatisticsByYear,
-} from '../../types/statistics.ts';
+} from '../../../types/statistics.ts';
 import Cell from '../cell/Cell.tsx';
 
 const Row: FC<{statistics: StatisticsByYear}> = ({statistics}) => {

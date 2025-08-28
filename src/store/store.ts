@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { yearSlice } from './yearSlice.ts';
+import yearReducer from './yearSlice.ts';
+import sortingReducer from './sortingSlice.ts';
 
 export const store = configureStore({
   reducer: {
-    year: yearSlice.reducer,
+    year: yearReducer,
+    sorting: sortingReducer,
   },
 });
 
