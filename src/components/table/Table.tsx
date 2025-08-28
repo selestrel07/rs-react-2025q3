@@ -1,11 +1,38 @@
-import { type FC } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import Row from '../row/Row.tsx';
-import type { StatisticsWithCountryName } from '../../types/statistics.ts';
+import type {
+  StatisticsByYear,
+  StatisticsWithCountryName,
+} from '../../types/statistics.ts';
 import Cell from '../cell/Cell.tsx';
+import { useAppSelector } from '../../hooks/app-hooks.ts';
 
 const Table: FC<{ statistics: StatisticsWithCountryName[] }> = ({
   statistics,
 }) => {
+  const year = useAppSelector((state) => state.year.value);
+  const [statisticsByYear, setStatisticsByYear] = useState<
+    StatisticsByYear[] | null
+  >(null);
+
+  useEffect(() => {
+    setStatisticsByYear(
+      statistics
+        .map((fullStatistics) => {
+          const yearStatistics = fullStatistics.data.find(
+            (yearStatistics) => yearStatistics.year === year
+          );
+          if (!yearStatistics) return null;
+          return {
+            country: fullStatistics.country,
+            iso_code: fullStatistics.iso_code,
+            ...yearStatistics,
+          };
+        })
+        .filter((stats) => stats !== null)
+    );
+  }, [year]);
+
   return (
     <table className="border-collapse">
       <thead>
@@ -19,16 +46,8 @@ const Table: FC<{ statistics: StatisticsWithCountryName[] }> = ({
         </tr>
       </thead>
       <tbody>
-        {statistics.map((statisticsFull) =>
-          statisticsFull.data.map((yearFullData) => (
-            <Row
-              key={`${statisticsFull.iso_code}-${yearFullData.year}`}
-              country={statisticsFull.country}
-              iso={statisticsFull.iso_code}
-              data={yearFullData}
-            />
-          ))
-        )}
+        {statisticsByYear &&
+          statisticsByYear.map((stats) => <Row statistics={stats} />)}
       </tbody>
     </table>
   );

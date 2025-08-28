@@ -1,15 +1,17 @@
 import type { FC } from 'react';
-import type { YearStatistics } from '../../types/statistics.ts';
+import type {
+  StatisticsByYear,
+} from '../../types/statistics.ts';
 import Cell from '../cell/Cell.tsx';
 
-const Row: FC<{country: string; iso: string; data: YearStatistics}> = ({country, iso, data}) => {
+const Row: FC<{statistics: StatisticsByYear}> = ({statistics}) => {
   return <tr>
-    <Cell>{country ?? 'N/A'}</Cell>
-    <Cell>{iso}</Cell>
-    <Cell>{data.year}</Cell>
-    <Cell>{data.population ?? 'N/A'}</Cell>
-    <Cell>{data.cement_co2 ?? 'N/A'}</Cell>
-    <Cell>{data.cement_co2_per_capita ?? 'N/A'}</Cell>
+    <Cell>{statistics.country ?? 'N/A'}</Cell>
+    <Cell>{statistics.iso_code ?? 'N/A'}</Cell>
+    <Cell>{statistics.year}</Cell>
+    <Cell>{statistics.population ?? 'N/A'}</Cell>
+    <Cell>{statistics.cement_co2 ?? 'N/A'}</Cell>
+    <Cell>{statistics.cement_co2_per_capita ?? 'N/A'}</Cell>
   </tr>
 }
 

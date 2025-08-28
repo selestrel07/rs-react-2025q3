@@ -2,6 +2,8 @@ import './App.css';
 import Loader from './components/loader/Loader.tsx';
 import { lazy, Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Provider } from 'react-redux';
+import { store } from './store/store.ts';
 
 const Main = lazy(() => import('./pages/Main.tsx'));
 const queryClient = new QueryClient({
@@ -14,11 +16,13 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<Loader />}>
-        <Main />
-      </Suspense>
-    </QueryClientProvider>
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <Suspense fallback={<Loader />}>
+          <Main />
+        </Suspense>
+      </QueryClientProvider>
+    </Provider>
   );
 }
 
