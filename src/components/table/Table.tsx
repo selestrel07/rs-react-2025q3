@@ -50,15 +50,17 @@ const Table: FC<{ statistics: StatisticsWithCountryName[] }> = ({
   }, [year, sorting, filter]);
 
   return (
-    <table className="border-collapse">
-      <Head />
-      <tbody>
+    <div className="overflow-auto w-full h-full scroll-thin">
+      <table className="border-collapse min-w-max w-full">
+        <Head />
+        <tbody>
         {statisticsByYear &&
           statisticsByYear.map((stats) => (
             <Row key={stats.country} statistics={stats} />
           ))}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+    </div>
   );
 };
 

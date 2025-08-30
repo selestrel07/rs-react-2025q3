@@ -1,0 +1,16 @@
+export const OPTIONAL_FIELDS= [
+  'cumulative_cement_cp2',
+  'cumulative_luc_co2',
+  'ghg_excluding_lucf_per_capita',
+  'ghg_per_capita',
+  'land_use_change_co2',
+  'land_use_change_co2_per_capita',
+  'methane',
+  'methane_per_capita',
+  'nitrous_oxide',
+  'nitrous_oxide_per_capita',
+  'temperature_change_from_ch4',
+  'temperature_change_from_co2',
+  'temperature_change_from_ghg',
+  'temperature_change_from_n2o',
+];

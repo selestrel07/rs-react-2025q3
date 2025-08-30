@@ -22,7 +22,7 @@ const Main: FC = () => {
   return (
     <>
       <Header data={data}/>
-      <main className="p-2.5">
+      <main className="p-2.5 w-full h-[calc(100vh-42px)] scroll">
         <Table statistics={data} />
       </main>
     </>

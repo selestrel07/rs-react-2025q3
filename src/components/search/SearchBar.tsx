@@ -1,6 +1,7 @@
 import { type ChangeEvent, type FC, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/app-hooks.ts';
 import { setFilter } from '../../store/filterSlice.ts';
+import Button from '../button/Button.tsx';
 
 const SearchBar: FC = () => {
   const searchValue = useAppSelector((state) => state.filter.value);
@@ -17,8 +18,13 @@ const SearchBar: FC = () => {
 
   return (
     <>
-      <input className="border-1 px-0.5 rounded-sm" type={'search'} value={userInput} onChange={handleChange} />
-      <button className="border-1 px-2.5 rounded-sm cursor-pointer transition-all duration-300 hover:-translate-y-0.5" onClick={handleSearch}>Search</button>
+      <input
+        className="border-1 px-0.5 rounded-sm"
+        type={'search'}
+        value={userInput}
+        onChange={handleChange}
+      />
+      <Button onClick={handleSearch}>Search</Button>
     </>
   );
 };

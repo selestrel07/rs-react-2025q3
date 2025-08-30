@@ -7,31 +7,48 @@ import { setSorting } from '../../../store/sortingSlice.ts';
 
 const Head: FC = () => {
   const sorting = useAppSelector((state) => state.sorting.value);
+  const optionalFields = useAppSelector((state) => state.optionalFields.value);
   const dispatch = useAppDispatch();
 
   const handleClick = (field: SortingFields): void => {
     console.log('dispatching click action');
-    dispatch(setSorting({
-      field,
-      order: (sorting.field !== field || sorting.order === 'DESC') ? 'ASC' : 'DESC',
-    }))
+    dispatch(
+      setSorting({
+        field,
+        order:
+          sorting.field !== field || sorting.order === 'DESC' ? 'ASC' : 'DESC',
+      })
+    );
   };
 
   return (
-    <thead className="sticky top-10">
+    <thead className="sticky top-0">
       <tr className="bg-green-100">
-        <Cell onClick={() => handleClick('country')} isSortable={true} isHeadCell={true}>
+        <Cell
+          onClick={() => handleClick('country')}
+          isSortable={true}
+          isHeadCell={true}
+        >
           Country
           <Sorting field="country" />
         </Cell>
         <Cell isHeadCell={true}>ISO</Cell>
         <Cell isHeadCell={true}>Year</Cell>
-        <Cell onClick={() => handleClick('population')} isSortable={true} isHeadCell={true}>
+        <Cell
+          onClick={() => handleClick('population')}
+          isSortable={true}
+          isHeadCell={true}
+        >
           Population
           <Sorting field="population" />
         </Cell>
         <Cell isHeadCell={true}>cement_co2</Cell>
         <Cell isHeadCell={true}>cement_co2_per_capita</Cell>
+        {optionalFields.map((field) => (
+          <Cell key={field} isHeadCell={true}>
+            {field}
+          </Cell>
+        ))}
       </tr>
     </thead>
   );
