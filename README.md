@@ -74,3 +74,37 @@ Repository for RS School React 2025 Q3 course
 - Project Management
   - Commits after the deadline: -40 points
   - Pull Request doesn't follow guideline (including checkboxes in Score) PR example: -10 points
+
+# App Performance
+## Without useMemo and React.memo
+### Sorting
+- commit duration: ~508.4ms
+- render duration: 496ms
+- interactions: sort table by country name (descending order)
+- flame graph: ![](screenshots/no-memo/flamegraph-sorting-1.png)![](screenshots/no-memo/flamegraph-sorting-2.png)
+- ranked chart: ![](screenshots/no-memo/ranked-chart-sorting-1.png)![](screenshots/no-memo/ranked-chart-sorting-1.png)
+### Country search
+- commit duration: ~594.5ms
+- render duration: 575.5ms
+- interactions: search by country name ('br')
+- flame graph: ![](screenshots/no-memo/flamegraph-country-search-1.png)![](screenshots/no-memo/flamegraph-country-search-2.png)![](screenshots/no-memo/flamegraph-country-search-3.png)![](screenshots/no-memo/flamegraph-country-search-4.png)
+- ranked chart: ![](screenshots/no-memo/ranked-chart-country-search-1.png)![](screenshots/no-memo/ranked-chart-country-search-2.png)![](screenshots/no-memo/ranked-chart-country-search-3.png)![](screenshots/no-memo/ranked-chart-country-search-4.png)
+### Selecting another year
+- commit duration: ~586.3ms
+- render duration: 555.6ms
+- interactions: select another year (2007)
+- flame graph: ![](screenshots/no-memo/flamegraph-year-1.png)![](screenshots/no-memo/flamegraph-year-2.png)
+- ranked chart: ![](screenshots/no-memo/ranked-year-1.png)![](screenshots/no-memo/ranked-year-2.png)
+### Adding a column
+- commit duration: ~163.3ms
+- render duration: 155.2ms
+- interactions: adding column (cumulative_cement_cp2)
+- flame graph: ![](screenshots/no-memo/flamegraph-adding-column-1.png)![](screenshots/no-memo/flamegraph-adding-column-2.png)![](screenshots/no-memo/flamegraph-adding-column-3.png)
+- ranked chart: ![](screenshots/no-memo/ranked-adding-column-1.png)![](screenshots/no-memo/ranked-adding-column-2.png)![](screenshots/no-memo/ranked-adding-column-3.png)
+### Removing a column
+- commit duration: ~75.6ms
+- render duration: 56.3ms
+- interactions: removing column (cumulative_cement_cp2)
+- flame graph: ![](screenshots/no-memo/flamegraph-removing-column-1.png)![](screenshots/no-memo/flamegraph-removing-column-2.png)![](screenshots/no-memo/flamegraph-removing-column-3.png)
+- ranked chart: ![](screenshots/no-memo/ranked-removing-column-1.png)![](screenshots/no-memo/ranked-removing-column-2.png)![](screenshots/no-memo/ranked-removing-column-3.png)
+
