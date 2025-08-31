@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import { type FC, memo } from 'react';
 import { useAppSelector } from '../../hooks/app-hooks.ts';
 import type { SortingFields } from '../../types/sorting.ts';
 
@@ -18,4 +18,6 @@ const Sorting: FC<{ field: SortingFields }> = ({ field }) => {
   );
 };
 
-export default Sorting;
+const MemoSorting = memo(Sorting)
+
+export default MemoSorting;
