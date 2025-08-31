@@ -7,6 +7,7 @@ import { useAppSelector } from '../../../hooks/app-hooks.ts';
 
 const Row: FC<{statistics: StatisticsByYear}> = ({statistics}) => {
   const optionalFields = useAppSelector((state) => state.optionalFields.value);
+
   return <tr>
     <Cell>{statistics.country ?? 'N/A'}</Cell>
     <Cell>{statistics.iso_code ?? 'N/A'}</Cell>
