@@ -10,9 +10,9 @@ const Modal: FC<{ isOpen: boolean; close: () => void }> = ({
   isOpen,
   close,
 }) => {
-  const [optionalFields, setOptionalFields] = useState<(keyof YearStatistics)[]>(
-    useAppSelector((state) => state.optionalFields.value)
-  );
+  const initialValues = useAppSelector((state) => state.optionalFields.value);
+  const [optionalFields, setOptionalFields] =
+    useState<(keyof YearStatistics)[]>(initialValues);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -32,7 +32,10 @@ const Modal: FC<{ isOpen: boolean; close: () => void }> = ({
     document.body.style.overflowY = 'hidden';
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>, value: keyof YearStatistics) => {
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement>,
+    value: keyof YearStatistics
+  ) => {
     const isChecked = e.target.checked;
     if (isChecked) {
       setOptionalFields([...optionalFields, value]);
@@ -71,7 +74,14 @@ const Modal: FC<{ isOpen: boolean; close: () => void }> = ({
           >
             Apply
           </Button>
-          <Button onClick={close}>Cancel</Button>
+          <Button
+            onClick={() => {
+              setOptionalFields(initialValues);
+              close();
+            }}
+          >
+            Cancel
+          </Button>
         </div>
       </div>
     </div>,
