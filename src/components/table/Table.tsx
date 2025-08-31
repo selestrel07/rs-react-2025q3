@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useCallback, useEffect, useMemo, useState } from 'react';
 import Row from './row/Row.tsx';
 import type {
   StatisticsByYear,
@@ -19,45 +19,53 @@ const Table: FC<{ statistics: StatisticsWithCountryName[] }> = ({
     StatisticsByYear[] | undefined
   >(undefined);
 
-  const filterStatistics = (statistics: StatisticsByYear[]) => {
-    return filterByCountry(statistics, filter);
-  };
+  const yearStatistics: StatisticsByYear[] = useMemo(
+    () =>
+      statistics
+        .map((fullStatistics) => {
+          const yearStatistics = fullStatistics.data.find(
+            (yearStatistics) => yearStatistics.year === year
+          );
+          if (!yearStatistics) return null;
+          return {
+            country: fullStatistics.country,
+            iso_code: fullStatistics.iso_code,
+            ...yearStatistics,
+          };
+        })
+        .filter((stats) => stats !== null),
+    [statistics, year]
+  );
 
-  const sortStatistics = (statistics: StatisticsByYear[]) => {
-    return sortBy(statistics, sorting.field, sorting.order);
-  };
+  const filterStatistics = useCallback(
+    (statistics: StatisticsByYear[]) => filterByCountry(statistics, filter),
+    [statistics, filter]
+  );
+
+  const sortStatistics = useCallback(
+    (statistics: StatisticsByYear[]) =>
+      sortBy(statistics, sorting.field, sorting.order),
+    [statistics, sorting]
+  );
+
+  const finalStatistics: StatisticsByYear[] = useMemo(
+    () => sortStatistics(filterStatistics(yearStatistics)),
+    [year, sorting, filter]
+  );
 
   useEffect(() => {
-    const yearStatistics: StatisticsByYear[] = statistics
-      .map((fullStatistics) => {
-        const yearStatistics = fullStatistics.data.find(
-          (yearStatistics) => yearStatistics.year === year
-        );
-        if (!yearStatistics) return null;
-        return {
-          country: fullStatistics.country,
-          iso_code: fullStatistics.iso_code,
-          ...yearStatistics,
-        };
-      })
-      .filter((stats) => stats !== null);
-
-    if (filter.length > 0) {
-      setStatisticsByYear(sortStatistics(filterStatistics(yearStatistics)));
-    } else {
-      setStatisticsByYear(sortStatistics(yearStatistics))
-    }
-  }, [year, sorting, filter]);
+    setStatisticsByYear(finalStatistics);
+  }, [finalStatistics]);
 
   return (
     <div className="overflow-auto w-full h-full scroll-thin">
       <table className="border-collapse min-w-max w-full">
         <Head />
         <tbody>
-        {statisticsByYear &&
-          statisticsByYear.map((stats) => (
-            <Row key={stats.country} statistics={stats} />
-          ))}
+          {statisticsByYear &&
+            statisticsByYear.map((stats) => (
+              <Row key={stats.country} statistics={stats} />
+            ))}
         </tbody>
       </table>
     </div>
