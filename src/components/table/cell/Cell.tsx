@@ -1,4 +1,4 @@
-import type { FC, ReactNode } from 'react';
+import { type FC, memo, type ReactNode } from 'react';
 
 const Cell: FC<{
   children: ReactNode;
@@ -34,4 +34,6 @@ const Cell: FC<{
   );
 };
 
-export default Cell;
+const MemoCell =  memo(Cell);
+
+export default MemoCell;
