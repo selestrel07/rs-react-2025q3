@@ -15,10 +15,15 @@ const Modal: FC<{ isOpen: boolean; close: () => void }> = ({
     useState<(keyof YearStatistics)[]>(initialValues);
   const dispatch = useAppDispatch();
 
+  const handleClose = () => {
+    setOptionalFields(initialValues);
+    close();
+  };
+
   useEffect(() => {
     const listener = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
-        close();
+        handleClose();
       }
     };
     document.addEventListener('keydown', listener);
@@ -46,7 +51,7 @@ const Modal: FC<{ isOpen: boolean; close: () => void }> = ({
 
   return createPortal(
     <div
-      onClick={close}
+      onClick={handleClose}
       className="absolute flex justify-center items-center bg-gray-200/70 w-screen h-screen z-50 top-0"
     >
       <div
@@ -74,14 +79,7 @@ const Modal: FC<{ isOpen: boolean; close: () => void }> = ({
           >
             Apply
           </Button>
-          <Button
-            onClick={() => {
-              setOptionalFields(initialValues);
-              close();
-            }}
-          >
-            Cancel
-          </Button>
+          <Button onClick={handleClose}>Cancel</Button>
         </div>
       </div>
     </div>,
