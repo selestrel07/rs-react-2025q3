@@ -82,7 +82,7 @@ Repository for RS School React 2025 Q3 course
 - render duration: 496ms
 - interactions: sort table by country name (descending order)
 - flame graph: ![](screenshots/no-memo/flamegraph-sorting-1.png)![](screenshots/no-memo/flamegraph-sorting-2.png)
-- ranked chart: ![](screenshots/no-memo/ranked-chart-sorting-1.png)![](screenshots/no-memo/ranked-chart-sorting-1.png)
+- ranked chart: ![](screenshots/no-memo/ranked-chart-sorting-1.png)![](screenshots/no-memo/ranked-chart-sorting-2.png)
 ### Country search
 - commit duration: ~594.5ms
 - render duration: 575.5ms
@@ -107,4 +107,36 @@ Repository for RS School React 2025 Q3 course
 - interactions: removing column (cumulative_cement_cp2)
 - flame graph: ![](screenshots/no-memo/flamegraph-removing-column-1.png)![](screenshots/no-memo/flamegraph-removing-column-2.png)![](screenshots/no-memo/flamegraph-removing-column-3.png)
 - ranked chart: ![](screenshots/no-memo/ranked-removing-column-1.png)![](screenshots/no-memo/ranked-removing-column-2.png)![](screenshots/no-memo/ranked-removing-column-3.png)
+
+## With useMemo and React.memo
+### Sorting
+- commit duration: ~326.9ms
+- render duration: 314ms
+- interactions: sort table by country name (descending order)
+- flame graph: ![](screenshots/memo/flamegraph-sorting-1.png)![](screenshots/memo/flamegraph-sorting-2.png)
+- ranked chart: ![](screenshots/memo/ranked-chart-sorting-1.png)![](screenshots/memo/ranked-chart-sorting-2.png)
+### Country search
+- commit duration: ~473.1ms
+- render duration: 463ms
+- interactions: search by country name ('br')
+- flame graph: ![](screenshots/memo/flamegraph-country-search-1.png)![](screenshots/memo/flamegraph-country-search-2.png)![](screenshots/memo/flamegraph-country-search-3.png)![](screenshots/memo/flamegraph-country-search-4.png)
+- ranked chart: ![](screenshots/memo/ranked-chart-country-search-1.png)![](screenshots/memo/ranked-chart-country-search-2.png)![](screenshots/memo/ranked-chart-country-search-3.png)![](screenshots/memo/ranked-chart-country-search-4.png)
+### Selecting another year
+- commit duration: ~452.4ms
+- render duration: 444.1ms
+- interactions: select another year (2007)
+- flame graph: ![](screenshots/memo/flamegraph-year-1.png)![](screenshots/memo/flamegraph-year-2.png)
+- ranked chart: ![](screenshots/memo/ranked-year-1.png)![](screenshots/memo/ranked-year-2.png)
+### Adding a column
+- commit duration: ~497ms
+- render duration: 489.3ms
+- interactions: adding column (cumulative_cement_cp2)
+- flame graph: ![](screenshots/memo/flamegraph-adding-column-1.png)![](screenshots/memo/flamegraph-adding-column-2.png)![](screenshots/memo/flamegraph-adding-column-3.png)
+- ranked chart: ![](screenshots/memo/ranked-adding-column-1.png)![](screenshots/memo/ranked-adding-column-2.png)![](screenshots/memo/ranked-adding-column-3.png)
+### Removing a column
+- commit duration: ~67.8ms
+- render duration: 60.3ms
+- interactions: removing column (cumulative_cement_cp2)
+- flame graph: ![](screenshots/memo/flamegraph-removing-column-1.png)![](screenshots/memo/flamegraph-removing-column-2.png)![](screenshots/memo/flamegraph-removing-column-3.png)
+- ranked chart: ![](screenshots/memo/ranked-removing-column-1.png)![](screenshots/memo/ranked-removing-column-2.png)![](screenshots/memo/ranked-removing-column-3.png)
 
