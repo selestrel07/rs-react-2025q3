@@ -1,0 +1,1 @@
+npx --prefix ./ -- commitlint --config ./commitlint.config.mjs --edit $1
